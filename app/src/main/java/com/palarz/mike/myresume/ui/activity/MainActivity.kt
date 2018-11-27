@@ -6,6 +6,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.palarz.mike.myresume.R
 import com.palarz.mike.myresume.ui.adapter.TopicsAdapter
+import com.palarz.mike.myresume.ui.glide.GlideApp
+import kotlinx.android.synthetic.main.activity_main.*
 
 private val topics = setOf("Skills", "Projects", "Experience", "Education")
 
@@ -28,5 +30,9 @@ class MainActivity : AppCompatActivity() {
             adapter = topicsAdapter
         }
 
+        // TODO: Do you really need to use Glide? Think about this.
+        GlideApp.with(this)
+            .load(R.drawable.headshot)
+            .into(headshot)
     }
 }

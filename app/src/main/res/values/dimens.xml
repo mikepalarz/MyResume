@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Global-->
+    <dimen name="half_increment">4dp</dimen>
+    <dimen name="base_size">8dp</dimen>
+    <dimen name="two_increments">16dp</dimen>
+    <dimen name="three_increments">24dp</dimen>
+
+    <!--Main activity-->
+    <dimen name="headshot_height">100dp</dimen>
+    <dimen name="headshot_width">100dp</dimen>
+</resources>

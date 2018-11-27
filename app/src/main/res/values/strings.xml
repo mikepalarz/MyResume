@@ -1,3 +1,10 @@
 <resources>
+    <!--Global-->
     <string name="app_name">MyResume</string>
+
+    <!--Main activity-->
+    <string name="headline">Android developer and seasoned RF engineer utilizing my unique background in mobile development. Experienced in contributing
+iterative problem-solving skills, collaborative teamwork, and a motivated learning mindset.</string>
+
+
 </resources>
