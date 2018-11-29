@@ -7,9 +7,15 @@ import android.support.v7.widget.RecyclerView
 import com.palarz.mike.myresume.R
 import com.palarz.mike.myresume.ui.adapter.TopicsAdapter
 import com.palarz.mike.myresume.ui.glide.GlideApp
+import com.palarz.mike.myresume.ui.model.Section
 import kotlinx.android.synthetic.main.activity_main.*
 
-private val topics = setOf("Skills", "Projects", "Experience", "Education")
+private val sections = setOf(
+    Section("Skills"),
+    Section("Projects"),
+    Section("Experience"),
+    Section("Education")
+)
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         manager = LinearLayoutManager(this)
-        topicsAdapter = TopicsAdapter(topics)
+        topicsAdapter = TopicsAdapter(sections)
 
         recyclerView = findViewById<RecyclerView>(R.id.recyclerview_topics).apply{
             setHasFixedSize(true)
@@ -34,5 +40,6 @@ class MainActivity : AppCompatActivity() {
         GlideApp.with(this)
             .load(R.drawable.headshot)
             .into(headshot)
+
     }
 }

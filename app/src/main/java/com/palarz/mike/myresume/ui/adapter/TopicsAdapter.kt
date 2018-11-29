@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.palarz.mike.myresume.R
+import com.palarz.mike.myresume.ui.model.Section
 import kotlinx.android.synthetic.main.list_item_topic.view.*
 
-class TopicsAdapter(private val topics: Set<String>) : RecyclerView.Adapter<TopicsAdapter.TopicsViewHolder>(){
+class TopicsAdapter(private val topics: Set<Section>) : RecyclerView.Adapter<TopicsAdapter.TopicsViewHolder>(){
 
     class TopicsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val topic = view.topic
@@ -19,7 +20,7 @@ class TopicsAdapter(private val topics: Set<String>) : RecyclerView.Adapter<Topi
     }
 
     override fun onBindViewHolder(holder: TopicsViewHolder, position: Int) {
-        holder.topic.text = topics.elementAt(position)
+        holder.topic.text = topics.elementAt(position).section
     }
 
     override fun getItemCount(): Int {
