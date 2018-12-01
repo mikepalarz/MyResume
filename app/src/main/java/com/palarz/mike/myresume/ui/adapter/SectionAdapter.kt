@@ -11,6 +11,7 @@ import com.palarz.mike.myresume.ui.model.Section
 import com.palarz.mike.myresume.ui.model.Skills
 import kotlinx.android.synthetic.main.list_item_section.view.*
 import kotlinx.android.synthetic.main.list_item_skills.view.*
+import kotlinx.android.synthetic.main.list_item_skills_bullets.view.*
 import kotlinx.android.synthetic.main.list_item_skills_headers.view.*
 
 // Other view types to come
@@ -25,7 +26,7 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
 
     class SkillViewHolder(view: View) : SectionAdapter.SectionViewHolder(view) {
         val skillsSection = view.skills_section
-        val skills = view.recyclerview_skills
+        val skills = view.recyclerview_skills_headers
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SectionViewHolder = when(viewType) {
@@ -45,7 +46,7 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
             VIEWTYPE_SKILL -> {
                 val skill: Skills = sections.elementAt(position) as Skills
                 (holder as SkillViewHolder).skillsSection.text = skill.section
-                val skillHeaderAdapter = SkillHeaderAdapter(Skills.headers)
+                val skillHeaderAdapter = SkillHeaderAdapter(context)
                 val linearLayoutManager = LinearLayoutManager(context)
                 (holder as SkillViewHolder).skills.apply {
                     setHasFixedSize(true)
@@ -74,10 +75,13 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
 
 }
 
-class SkillHeaderAdapter(private val headers: Set<String>) : RecyclerView.Adapter<SkillHeaderAdapter.SkillHeaderViewHolder>() {
+class SkillHeaderAdapter(val context: Context) : RecyclerView.Adapter<SkillHeaderAdapter.SkillHeaderViewHolder>() {
+
+    private val headers = Skills.headers
 
     class SkillHeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val skillHeader = view.skills_section_header
+        val bullets = view.recyclerview_skills_bullets
     }
 
 
@@ -90,5 +94,30 @@ class SkillHeaderAdapter(private val headers: Set<String>) : RecyclerView.Adapte
 
     override fun onBindViewHolder(holder: SkillHeaderAdapter.SkillHeaderViewHolder, position: Int) {
         holder.skillHeader.text = headers.elementAt(position)
+        val manager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        val skillBulletAdapter = SkillBulletAdapter(Skills.bullets.elementAt(position))
+        holder.bullets.apply {
+            setHasFixedSize(true)
+            layoutManager = manager
+            adapter = skillBulletAdapter
+        }
+    }
+}
+
+class SkillBulletAdapter(private val bullets: Set<String>) : RecyclerView.Adapter<SkillBulletAdapter.SkillBulletViewHolder>() {
+
+    class SkillBulletViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val bulletsView = view.tv_skills_bullet
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SkillBulletViewHolder {
+        val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_skills_bullets, parent, false)
+        return SkillBulletViewHolder(listItem)
+    }
+
+    override fun getItemCount() = bullets.size
+
+    override fun onBindViewHolder(holder: SkillBulletViewHolder, position: Int) {
+        holder.bulletsView.text = "\u2022 ${bullets.elementAt(position)}"
     }
 }
