@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/skills_section_header"
+        android:id="@+id/tv_skills_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/TextAppearance.AppCompat.Body1"
@@ -15,10 +15,10 @@
         tools:text="Programming Languages"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview_skills_bullets"
+        android:id="@+id/rv_skills_bullets"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/skills_section_header"/>
+        app:layout_constraintTop_toBottomOf="@id/tv_skills_header"/>
 
 </android.support.constraint.ConstraintLayout>

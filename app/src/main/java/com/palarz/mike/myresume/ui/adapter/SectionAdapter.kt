@@ -11,28 +11,28 @@ import com.palarz.mike.myresume.ui.model.Section
 import com.palarz.mike.myresume.ui.model.Skills
 import kotlinx.android.synthetic.main.list_item_section.view.*
 import kotlinx.android.synthetic.main.list_item_skills.view.*
-import kotlinx.android.synthetic.main.list_item_skills_bullets.view.*
+import kotlinx.android.synthetic.main.list_item_skills_bullet.view.*
 import kotlinx.android.synthetic.main.list_item_skills_headers.view.*
 
 // Other view types to come
 private const val VIEWTYPE_GENERIC = 0  // You likely can remove this at some point
-private const val VIEWTYPE_SKILL = 1
+private const val VIEWTYPE_SKILLS = 1
 
 class SectionAdapter(private val sections: Set<Section>, val context: Context) : RecyclerView.Adapter<SectionAdapter.SectionViewHolder>(){
 
     open class SectionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val section = view.section
+        val tvSection = view.tv_section
     }
 
-    class SkillViewHolder(view: View) : SectionAdapter.SectionViewHolder(view) {
-        val skillsSection = view.skills_section
-        val skills = view.recyclerview_skills_headers
+    class SkillsViewHolder(view: View) : SectionAdapter.SectionViewHolder(view) {
+        val tvSkillsSection = view.tv_skills_section
+        val rvSkillsHeaders = view.rv_skills_headers
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SectionViewHolder = when(viewType) {
-        VIEWTYPE_SKILL -> {
+        VIEWTYPE_SKILLS -> {
             val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_skills, parent, false)
-            SkillViewHolder(listItem)
+            SkillsViewHolder(listItem)
         }
 
         else -> {
@@ -43,81 +43,81 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
 
     override fun onBindViewHolder(holder: SectionViewHolder, position: Int) {
         when(holder.itemViewType) {
-            VIEWTYPE_SKILL -> {
-                val skill: Skills = sections.elementAt(position) as Skills
-                (holder as SkillViewHolder).skillsSection.text = skill.section
-                val skillHeaderAdapter = SkillHeaderAdapter(context)
+            VIEWTYPE_SKILLS -> {
+                val skill = sections.elementAt(position) as Skills
+                (holder as SkillsViewHolder).tvSkillsSection.text = skill.section
+                val skillsHeadersAdapter = SkillsHeaderAdapter(context)
                 val linearLayoutManager = LinearLayoutManager(context)
-                (holder as SkillViewHolder).skills.apply {
+                (holder as SkillsViewHolder).rvSkillsHeaders.apply {
                     setHasFixedSize(true)
                     layoutManager = linearLayoutManager
-                    adapter = skillHeaderAdapter
+                    adapter = skillsHeadersAdapter
                 }
 
             }
             else -> {
-                holder.section.text = sections.elementAt(position).section
+                holder.tvSection.text = sections.elementAt(position).section
             }
         }
 
     }
 
     override fun getItemCount(): Int {
-        // For the time being, we will return one so that we can focus on the Skills section
+        // For the time being, we will return one so that we can focus on the Skills tvSection
 //        return sections.size
-        return 1
+        return 2
     }
 
     override fun getItemViewType(position: Int): Int = when (position) {
-        0 -> VIEWTYPE_SKILL
+        0 -> VIEWTYPE_SKILLS
         else -> VIEWTYPE_GENERIC
     }
 
 }
 
-class SkillHeaderAdapter(val context: Context) : RecyclerView.Adapter<SkillHeaderAdapter.SkillHeaderViewHolder>() {
+class SkillsHeaderAdapter(val context: Context) : RecyclerView.Adapter<SkillsHeaderAdapter.SkillHeaderViewHolder>() {
 
     private val headers = Skills.headers
 
     class SkillHeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val skillHeader = view.skills_section_header
-        val bullets = view.recyclerview_skills_bullets
+        val tvSkillsHeader = view.tv_skills_header
+        val rvBullets = view.rv_skills_bullets
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SkillHeaderAdapter.SkillHeaderViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SkillsHeaderAdapter.SkillHeaderViewHolder {
         val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_skills_headers, parent, false)
         return SkillHeaderViewHolder(listItem)
     }
 
     override fun getItemCount() = headers.size
 
-    override fun onBindViewHolder(holder: SkillHeaderAdapter.SkillHeaderViewHolder, position: Int) {
-        holder.skillHeader.text = headers.elementAt(position)
-        val manager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        val skillBulletAdapter = SkillBulletAdapter(Skills.bullets.elementAt(position))
-        holder.bullets.apply {
+    override fun onBindViewHolder(holder: SkillsHeaderAdapter.SkillHeaderViewHolder, position: Int) {
+        holder.tvSkillsHeader.text = headers.elementAt(position)
+        val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        val skillBulletAdapter = SkillsBulletAdapter(Skills.bullets.elementAt(position))
+        holder.rvBullets.apply {
             setHasFixedSize(true)
-            layoutManager = manager
+            layoutManager = linearLayoutManager
             adapter = skillBulletAdapter
         }
     }
 }
 
-class SkillBulletAdapter(private val bullets: Set<String>) : RecyclerView.Adapter<SkillBulletAdapter.SkillBulletViewHolder>() {
+class SkillsBulletAdapter(private val bullets: Set<String>) : RecyclerView.Adapter<SkillsBulletAdapter.SkillsBulletViewHolder>() {
 
-    class SkillBulletViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val bulletsView = view.tv_skills_bullet
+    class SkillsBulletViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val tvBullet = view.tv_skills_bullet
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SkillBulletViewHolder {
-        val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_skills_bullets, parent, false)
-        return SkillBulletViewHolder(listItem)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SkillsBulletViewHolder {
+        val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_skills_bullet, parent, false)
+        return SkillsBulletViewHolder(listItem)
     }
 
     override fun getItemCount() = bullets.size
 
-    override fun onBindViewHolder(holder: SkillBulletViewHolder, position: Int) {
-        holder.bulletsView.text = "\u2022 ${bullets.elementAt(position)}"
+    override fun onBindViewHolder(holder: SkillsBulletViewHolder, position: Int) {
+        holder.tvBullet.text = "\u2022 ${bullets.elementAt(position)}"
     }
 }
