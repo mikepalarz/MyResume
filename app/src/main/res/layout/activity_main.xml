@@ -65,16 +65,15 @@
 
     </android.support.v7.widget.CardView>
 
-
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview_topics"
+        android:id="@+id/rv_sections"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/base_size"
-        android:layout_marginRight="@dimen/base_size"
-        android:layout_marginEnd="@dimen/base_size"
         android:layout_marginLeft="@dimen/base_size"
         android:layout_marginStart="@dimen/base_size"
+        android:layout_marginRight="@dimen/base_size"
+        android:layout_marginEnd="@dimen/base_size"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/header_container"

@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         manager = LinearLayoutManager(this)
         topicsAdapter = SectionAdapter(sections, this)
 
-        recyclerView = findViewById<RecyclerView>(R.id.recyclerview_topics).apply{
+        recyclerView = findViewById<RecyclerView>(R.id.rv_sections).apply{
             setHasFixedSize(true)
             layoutManager = manager
             adapter = topicsAdapter
