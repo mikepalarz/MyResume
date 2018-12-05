@@ -7,9 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.palarz.mike.myresume.R
+import com.palarz.mike.myresume.ui.model.Experience
 import com.palarz.mike.myresume.ui.model.Projects
 import com.palarz.mike.myresume.ui.model.Section
 import com.palarz.mike.myresume.ui.model.Skills
+import kotlinx.android.synthetic.main.list_item_experience.view.*
+import kotlinx.android.synthetic.main.list_item_experience_bullet.view.*
+import kotlinx.android.synthetic.main.list_item_experience_companies.view.*
 import kotlinx.android.synthetic.main.list_item_projects.view.*
 import kotlinx.android.synthetic.main.list_item_projects_bullet.view.*
 import kotlinx.android.synthetic.main.list_item_projects_headers.view.*
@@ -18,10 +22,10 @@ import kotlinx.android.synthetic.main.list_item_skills.view.*
 import kotlinx.android.synthetic.main.list_item_skills_bullet.view.*
 import kotlinx.android.synthetic.main.list_item_skills_headers.view.*
 
-// Other view types to come
-private const val VIEWTYPE_GENERIC = 0  // You likely can remove this at some point
+private const val VIEWTYPE_GENERIC = 0
 private const val VIEWTYPE_SKILLS = 1
 private const val VIEWTYPE_PROJECTS = 2
+private const val VIEWTYPE_EXPERIENCE = 3
 
 class SectionAdapter(private val sections: Set<Section>, val context: Context) : RecyclerView.Adapter<SectionAdapter.SectionViewHolder>(){
 
@@ -39,6 +43,11 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
         val rvProjectsHeaders = view.rv_projects_headers
     }
 
+    class ExperienceViewHolder(view: View) : SectionViewHolder(view) {
+        val tvExperienceSection = view.tv_experience_section
+        val rvExperienceCompanies = view.rv_experience_companies
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SectionViewHolder = when(viewType) {
         VIEWTYPE_SKILLS -> {
             val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_skills, parent, false)
@@ -48,6 +57,11 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
         VIEWTYPE_PROJECTS -> {
             val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_projects, parent, false)
             ProjectsViewHolder(listItem)
+        }
+
+        VIEWTYPE_EXPERIENCE -> {
+            val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_experience, parent, false)
+            ExperienceViewHolder(listItem)
         }
 
         else -> {
@@ -79,6 +93,16 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
                     adapter = projectsHeadersAdapter
                 }
             }
+            VIEWTYPE_EXPERIENCE -> {
+                val experience = sections.elementAt(position) as Experience
+                (holder as ExperienceViewHolder).tvExperienceSection.text = experience.section
+                val experienceCompaniesAdapter = ExperienceCompaniesAdapter(context)
+                val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                (holder as ExperienceViewHolder).rvExperienceCompanies.apply {
+                    layoutManager = linearLayoutManager
+                    adapter = experienceCompaniesAdapter
+                }
+            }
             else -> {
                 holder.tvSection.text = sections.elementAt(position).section
             }
@@ -89,12 +113,13 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
     override fun getItemCount(): Int {
         // For the time being, we will return one so that we can focus on the Skills tvSection
 //        return sections.size
-        return 2
+        return 3
     }
 
     override fun getItemViewType(position: Int): Int = when (position) {
         0 -> VIEWTYPE_SKILLS
         1 -> VIEWTYPE_PROJECTS
+        2 -> VIEWTYPE_EXPERIENCE
         else -> VIEWTYPE_GENERIC
     }
 
@@ -194,6 +219,63 @@ class ProjectsBulletAdapter(private val bullets: Set<String>) : RecyclerView.Ada
     override fun getItemCount() = bullets.size
 
     override fun onBindViewHolder(holder: ProjectsBulletViewHolder, position: Int) {
+        holder.tvBullet.text = "\u2022 ${bullets.elementAt(position)}"
+    }
+}
+
+class ExperienceCompaniesAdapter(val context: Context) : RecyclerView.Adapter<ExperienceCompaniesAdapter.ExperienceCompaniesViewHolder>() {
+
+    private val companies = Experience.companies
+    private val positions = Experience.positions
+    private val locations = Experience.locations
+    private val dates = Experience.dates
+
+    class ExperienceCompaniesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val tvExperienceCompany = view.tv_experience_company
+        val tvExperiencePosition = view.tv_experience_position
+        val tvExperienceLocation = view.tv_experience_location
+        val tvExperienceDate = view.tv_experience_date
+        val rvBullets = view.rv_experience_bullets
+    }
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExperienceCompaniesViewHolder {
+        val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_experience_companies, parent, false)
+        return ExperienceCompaniesViewHolder(listItem)
+    }
+
+    override fun getItemCount() = companies.size
+
+    override fun onBindViewHolder(holder: ExperienceCompaniesViewHolder, position: Int) {
+        holder.tvExperienceCompany.text = companies.elementAt(position)
+        holder.tvExperiencePosition.text = positions.elementAt(position)
+        holder.tvExperienceLocation.text = locations.elementAt(position)
+        holder.tvExperienceDate.text = dates.elementAt(position)
+
+        val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        val experienceBulletAdapter = ExperienceBulletAdapter(Experience.bullets.elementAt(position))
+        holder.rvBullets.apply {
+            setHasFixedSize(true)
+            layoutManager = linearLayoutManager
+            adapter = experienceBulletAdapter
+        }
+    }
+}
+
+class ExperienceBulletAdapter(private val bullets: Set<String>) : RecyclerView.Adapter<ExperienceBulletAdapter.ExperienceBulletViewHolder>() {
+
+    class ExperienceBulletViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val tvBullet = view.tv_experience_bullet
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExperienceBulletViewHolder {
+        val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_experience_bullet, parent, false)
+        return ExperienceBulletViewHolder(listItem)
+    }
+
+    override fun getItemCount() = bullets.size
+
+    override fun onBindViewHolder(holder: ExperienceBulletViewHolder, position: Int) {
         holder.tvBullet.text = "\u2022 ${bullets.elementAt(position)}"
     }
 }
