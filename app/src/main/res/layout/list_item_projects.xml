@@ -13,21 +13,30 @@
         android:layout_margin="@dimen/base_size">
 
         <TextView
-            android:id="@+id/tv_skills_section"
+            android:id="@+id/tv_projects_section"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextAppearance.AppCompat.Headline"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="Skills"/>
+            tools:text="Projects"/>
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_skills_headers"
+            android:id="@+id/rv_projects_headers"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tv_skills_section"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@id/tv_skills_section" />
+            app:layout_constraintTop_toBottomOf="@id/tv_projects_section"
+            app:layout_constraintStart_toStartOf="@id/tv_projects_section" />
+
+        <TextView
+            android:id="@+id/tv_projects_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/TextAppearance.AppCompat.Caption"
+            android:text="@string/more_projects"
+            android:layout_marginTop="@dimen/base_size"
+            app:layout_constraintTop_toBottomOf="@id/rv_projects_headers"
+            app:layout_constraintStart_toStartOf="parent"/>
 
 
     </android.support.constraint.ConstraintLayout>

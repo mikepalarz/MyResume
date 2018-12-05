@@ -7,13 +7,14 @@ import android.support.v7.widget.RecyclerView
 import com.palarz.mike.myresume.R
 import com.palarz.mike.myresume.ui.adapter.SectionAdapter
 import com.palarz.mike.myresume.ui.glide.GlideApp
+import com.palarz.mike.myresume.ui.model.Projects
 import com.palarz.mike.myresume.ui.model.Section
 import com.palarz.mike.myresume.ui.model.Skills
 import kotlinx.android.synthetic.main.activity_main.*
 
 private val sections = setOf(
     Skills("Skills"),
-    Section("Projects"),
+    Projects("Projects"),
     Section("Experience"),
     Section("Education")
 )

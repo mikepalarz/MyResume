@@ -7,5 +7,8 @@
     <string name="headline">Android developer and seasoned RF engineer utilizing my unique background in mobile development. Experienced in contributing
 iterative problem-solving skills, collaborative teamwork, and a motivated learning mindset.</string>
 
+    <!--Projects list item-->
+    <string name="more_projects">More...</string>
+
 
 </resources>
