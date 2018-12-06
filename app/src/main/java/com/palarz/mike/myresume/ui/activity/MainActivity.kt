@@ -7,23 +7,20 @@ import android.support.v7.widget.RecyclerView
 import com.palarz.mike.myresume.R
 import com.palarz.mike.myresume.ui.adapter.SectionAdapter
 import com.palarz.mike.myresume.ui.glide.GlideApp
-import com.palarz.mike.myresume.ui.model.Experience
-import com.palarz.mike.myresume.ui.model.Projects
-import com.palarz.mike.myresume.ui.model.Section
-import com.palarz.mike.myresume.ui.model.Skills
+import com.palarz.mike.myresume.ui.model.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 private val sections = setOf(
     Skills("Skills"),
     Projects("Projects"),
     Experience("Experience"),
-    Section("Education")
+    Education("Education")
 )
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var topicsAdapter: RecyclerView.Adapter<*>
+    private lateinit var topicsAdapter: SectionAdapter
     private lateinit var manager: RecyclerView.LayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {

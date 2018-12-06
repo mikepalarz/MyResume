@@ -7,10 +7,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.palarz.mike.myresume.R
-import com.palarz.mike.myresume.ui.model.Experience
-import com.palarz.mike.myresume.ui.model.Projects
-import com.palarz.mike.myresume.ui.model.Section
-import com.palarz.mike.myresume.ui.model.Skills
+import com.palarz.mike.myresume.ui.model.*
+import kotlinx.android.synthetic.main.list_item_education.view.*
+import kotlinx.android.synthetic.main.list_item_education_headers.view.*
 import kotlinx.android.synthetic.main.list_item_experience.view.*
 import kotlinx.android.synthetic.main.list_item_experience_bullet.view.*
 import kotlinx.android.synthetic.main.list_item_experience_companies.view.*
@@ -26,6 +25,7 @@ private const val VIEWTYPE_GENERIC = 0
 private const val VIEWTYPE_SKILLS = 1
 private const val VIEWTYPE_PROJECTS = 2
 private const val VIEWTYPE_EXPERIENCE = 3
+private const val VIEWTYPE_EDUCATION = 4
 
 class SectionAdapter(private val sections: Set<Section>, val context: Context) : RecyclerView.Adapter<SectionAdapter.SectionViewHolder>(){
 
@@ -48,6 +48,11 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
         val rvExperienceCompanies = view.rv_experience_companies
     }
 
+    class EducationViewHolder(view: View) : SectionViewHolder(view) {
+        val tvEducationSection = view.tv_education_section
+        val rvEducationHeaders = view.rv_education_headers
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SectionViewHolder = when(viewType) {
         VIEWTYPE_SKILLS -> {
             val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_skills, parent, false)
@@ -62,6 +67,11 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
         VIEWTYPE_EXPERIENCE -> {
             val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_experience, parent, false)
             ExperienceViewHolder(listItem)
+        }
+
+        VIEWTYPE_EDUCATION -> {
+            val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_education, parent, false)
+            EducationViewHolder(listItem)
         }
 
         else -> {
@@ -103,6 +113,16 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
                     adapter = experienceCompaniesAdapter
                 }
             }
+            VIEWTYPE_EDUCATION -> {
+                val education = sections.elementAt(position) as Education
+                (holder as EducationViewHolder).tvEducationSection.text = education.section
+                val educationAdapter = EducationHeaderAdapter(context)
+                val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                (holder as EducationViewHolder).rvEducationHeaders.apply {
+                    layoutManager = linearLayoutManager
+                    adapter = educationAdapter
+                }
+            }
             else -> {
                 holder.tvSection.text = sections.elementAt(position).section
             }
@@ -110,16 +130,14 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
 
     }
 
-    override fun getItemCount(): Int {
-        // For the time being, we will return one so that we can focus on the Skills tvSection
-//        return sections.size
-        return 3
-    }
+    override fun getItemCount() = sections.size
+
 
     override fun getItemViewType(position: Int): Int = when (position) {
         0 -> VIEWTYPE_SKILLS
         1 -> VIEWTYPE_PROJECTS
         2 -> VIEWTYPE_EXPERIENCE
+        3 -> VIEWTYPE_EDUCATION
         else -> VIEWTYPE_GENERIC
     }
 
@@ -277,5 +295,32 @@ class ExperienceBulletAdapter(private val bullets: Set<String>) : RecyclerView.A
 
     override fun onBindViewHolder(holder: ExperienceBulletViewHolder, position: Int) {
         holder.tvBullet.text = "\u2022 ${bullets.elementAt(position)}"
+    }
+}
+
+class EducationHeaderAdapter(val context: Context) : RecyclerView.Adapter<EducationHeaderAdapter.EducationHeaderViewHolder>() {
+
+    private val schools = Education.schools
+    private val degrees = Education.degrees
+    private val dates = Education.dates
+
+    class EducationHeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val tvEducationSchool = view.tv_education_school
+        val tvEducationDegree = view.tv_education_degree
+        val tvEducationDate = view.tv_education_date
+    }
+
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EducationHeaderViewHolder {
+        val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_education_headers, parent, false)
+        return EducationHeaderViewHolder(listItem)
+    }
+
+    override fun getItemCount() = schools.size
+
+    override fun onBindViewHolder(holder: EducationHeaderViewHolder, position: Int) {
+        holder.tvEducationSchool.text = schools.elementAt(position)
+        holder.tvEducationDegree.text = degrees.elementAt(position)
+        holder.tvEducationDate.text = dates.elementAt(position)
     }
 }

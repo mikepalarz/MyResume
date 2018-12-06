@@ -67,3 +67,11 @@ class Experience(section: String) : Section(section) {
         )
     }
 }
+
+class Education(section: String): Section(section) {
+    companion object {
+        val schools = listOf("Udacity", "Illinois Institute of Technology", "Illinois Institute of Technology")
+        val degrees = setOf("Android Development Nanodegree", "M. Sc. in Electrical Engineering", "B. Sc. in Electrical Engineering")
+        val dates = setOf("October 2018", "May 2015", "December 2012")
+    }
+}

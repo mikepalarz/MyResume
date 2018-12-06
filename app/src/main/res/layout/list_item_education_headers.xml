@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--TODO: Think about using vertical guidelines here from ConstraintLayout to clean this up-->
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:layout_editor_absoluteY="81dp">
+
+    <TextView
+        android:id="@+id/tv_education_school"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:lines="2"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/tv_education_degree"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:text="Illinois Institute of Technology" />
+
+    <TextView
+        android:id="@+id/tv_education_degree"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:lines="2"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toStartOf="@+id/tv_education_date"
+        app:layout_constraintStart_toEndOf="@+id/tv_education_school"
+        app:layout_constraintHorizontal_bias="0.5"
+        tools:text="M. Sc. in Electrical Engineering" />
+
+    <TextView
+        android:id="@+id/tv_education_date"
+        style="@style/TextAppearance.AppCompat.Body1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tv_education_degree"
+        tools:text="May 2015" />
+
+
+</android.support.constraint.ConstraintLayout>
