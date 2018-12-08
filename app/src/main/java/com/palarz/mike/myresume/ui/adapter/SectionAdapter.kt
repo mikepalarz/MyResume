@@ -1,6 +1,8 @@
 package com.palarz.mike.myresume.ui.adapter
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -305,7 +307,7 @@ class EducationHeaderAdapter(val context: Context) : RecyclerView.Adapter<Educat
     private val dates = Education.dates
 
     class EducationHeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvEducationSchool = view.tv_education_school
+        val ivEducationSchool = view.iv_education_school_logo
         val tvEducationDegree = view.tv_education_degree
         val tvEducationDate = view.tv_education_date
     }
@@ -316,11 +318,35 @@ class EducationHeaderAdapter(val context: Context) : RecyclerView.Adapter<Educat
         return EducationHeaderViewHolder(listItem)
     }
 
-    override fun getItemCount() = schools.size
+    override fun getItemCount() = degrees.size
 
     override fun onBindViewHolder(holder: EducationHeaderViewHolder, position: Int) {
-        holder.tvEducationSchool.text = schools.elementAt(position)
         holder.tvEducationDegree.text = degrees.elementAt(position)
         holder.tvEducationDate.text = dates.elementAt(position)
+
+        val school = schools.elementAt(position)
+
+        when(school) {
+            "Udacity" -> {
+                holder.ivEducationSchool.setImageResource(R.drawable.udacity)
+                holder.ivEducationSchool.setOnClickListener {
+                    val intent = Intent()
+                    intent.action = Intent.ACTION_VIEW
+                    intent.addCategory(Intent.CATEGORY_BROWSABLE)
+                    intent.data = Uri.parse("https://www.udacity.com/")
+                    context.startActivity(intent)
+                }
+            }
+            "Illinois Institute of Technology" -> {
+                holder.ivEducationSchool.setImageResource(R.drawable.iit)
+                holder.ivEducationSchool.setOnClickListener {
+                    val intent = Intent()
+                    intent.action = Intent.ACTION_VIEW
+                    intent.addCategory(Intent.CATEGORY_BROWSABLE)
+                    intent.data = Uri.parse("https://web.iit.edu//")
+                    context.startActivity(intent)
+                }
+            }
+        }
     }
 }
