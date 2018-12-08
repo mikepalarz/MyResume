@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import com.palarz.mike.myresume.R
+import com.palarz.mike.myresume.ui.extensions.setBrowserClickListener
 import com.palarz.mike.myresume.ui.model.*
 import kotlinx.android.synthetic.main.list_item_education.view.*
 import kotlinx.android.synthetic.main.list_item_education_headers.view.*
@@ -329,23 +331,11 @@ class EducationHeaderAdapter(val context: Context) : RecyclerView.Adapter<Educat
         when(school) {
             "Udacity" -> {
                 holder.ivEducationSchool.setImageResource(R.drawable.udacity)
-                holder.ivEducationSchool.setOnClickListener {
-                    val intent = Intent()
-                    intent.action = Intent.ACTION_VIEW
-                    intent.addCategory(Intent.CATEGORY_BROWSABLE)
-                    intent.data = Uri.parse("https://www.udacity.com/")
-                    context.startActivity(intent)
-                }
+                holder.ivEducationSchool.setBrowserClickListener("https://www.udacity.com/", context)
             }
             "Illinois Institute of Technology" -> {
                 holder.ivEducationSchool.setImageResource(R.drawable.iit)
-                holder.ivEducationSchool.setOnClickListener {
-                    val intent = Intent()
-                    intent.action = Intent.ACTION_VIEW
-                    intent.addCategory(Intent.CATEGORY_BROWSABLE)
-                    intent.data = Uri.parse("https://web.iit.edu//")
-                    context.startActivity(intent)
-                }
+                holder.ivEducationSchool.setBrowserClickListener("https://web.iit.edu//", context)
             }
         }
     }
