@@ -1,4 +1,4 @@
-package com.palarz.mike.myresume.ui.glide
+package com.palarz.mike.myresume.glide
 
 import com.bumptech.glide.annotation.GlideModule
 import com.bumptech.glide.module.AppGlideModule

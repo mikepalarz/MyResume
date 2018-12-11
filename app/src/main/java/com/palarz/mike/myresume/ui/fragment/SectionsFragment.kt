@@ -9,10 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.palarz.mike.myresume.R
 import com.palarz.mike.myresume.ui.adapter.SectionAdapter
-import com.palarz.mike.myresume.ui.model.Education
-import com.palarz.mike.myresume.ui.model.Experience
-import com.palarz.mike.myresume.ui.model.Projects
-import com.palarz.mike.myresume.ui.model.Skills
+import com.palarz.mike.myresume.model.Education
+import com.palarz.mike.myresume.model.Experience
+import com.palarz.mike.myresume.model.Projects
+import com.palarz.mike.myresume.model.Skills
 import kotlinx.android.synthetic.main.fragment_sections.view.*
 
 

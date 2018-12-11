@@ -1,4 +1,4 @@
-package com.palarz.mike.myresume.ui.model
+package com.palarz.mike.myresume.model
 
 open class Section(val section: String)
 

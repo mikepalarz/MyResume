@@ -1,4 +1,4 @@
-package com.palarz.mike.myresume.ui.extensions
+package com.palarz.mike.myresume.extensions
 
 import android.content.Context
 import android.content.Intent
