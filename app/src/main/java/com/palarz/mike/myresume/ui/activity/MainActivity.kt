@@ -1,45 +1,21 @@
 package com.palarz.mike.myresume.ui.activity
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import android.support.v7.app.AppCompatActivity
 import com.palarz.mike.myresume.R
-import com.palarz.mike.myresume.ui.adapter.SectionAdapter
-import com.palarz.mike.myresume.ui.glide.GlideApp
-import com.palarz.mike.myresume.ui.model.*
-import kotlinx.android.synthetic.main.activity_main.*
+import com.palarz.mike.myresume.ui.fragment.SectionsFragment
 
-private val sections = setOf(
-    Skills("Skills"),
-    Projects("Projects"),
-    Experience("Experience"),
-    Education("Education")
-)
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var recyclerView: RecyclerView
-    private lateinit var topicsAdapter: SectionAdapter
-    private lateinit var manager: RecyclerView.LayoutManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        manager = LinearLayoutManager(this)
-        topicsAdapter = SectionAdapter(sections, this)
-
-        recyclerView = findViewById<RecyclerView>(R.id.rv_sections).apply{
-            setHasFixedSize(true)
-            layoutManager = manager
-            adapter = topicsAdapter
-        }
-
-        // TODO: Do you really need to use Glide? Think about this.
-        GlideApp.with(this)
-            .load(R.drawable.headshot)
-            .into(headshot)
+        val sectionsFragment = SectionsFragment()
+        supportFragmentManager.beginTransaction()
+            .add(R.id.activity_main_fragment_container, sectionsFragment)
+            .commit()
 
     }
 }
