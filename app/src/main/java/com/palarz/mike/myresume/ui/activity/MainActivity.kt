@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.palarz.mike.myresume.R
 import com.palarz.mike.myresume.ui.fragment.SectionsFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -16,6 +17,8 @@ class MainActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .add(R.id.activity_main_fragment_container, sectionsFragment)
             .commit()
+
+        setSupportActionBar(toolbar)
 
     }
 }
