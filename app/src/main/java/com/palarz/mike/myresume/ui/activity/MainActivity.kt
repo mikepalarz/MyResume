@@ -19,6 +19,8 @@ class MainActivity : AppCompatActivity() {
             .commit()
 
         setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
     }
 }
