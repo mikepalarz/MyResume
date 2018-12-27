@@ -28,7 +28,11 @@ private const val VIEWTYPE_PROJECTS = 2
 private const val VIEWTYPE_EXPERIENCE = 3
 private const val VIEWTYPE_EDUCATION = 4
 
-class SectionAdapter(private val sections: Set<Section>, val context: Context) : RecyclerView.Adapter<SectionAdapter.SectionViewHolder>(){
+interface MoreButtonCallback {
+    fun showAllProjects()
+}
+
+class SectionAdapter(private val sections: Set<Section>, val context: Context, val callback: MoreButtonCallback) : RecyclerView.Adapter<SectionAdapter.SectionViewHolder>(){
 
     open class SectionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvSection = view.tv_section
@@ -42,6 +46,7 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
     class ProjectsViewHolder(view: View) : SectionViewHolder(view) {
         val tvProjectsSection = view.tv_projects_section
         val rvProjectsHeaders = view.rv_projects_headers
+        val btnProjectsMore = view.btn_projects_more
     }
 
     class ExperienceViewHolder(view: View) : SectionViewHolder(view) {
@@ -103,6 +108,10 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
                     layoutManager = linearLayoutManager
                     adapter = projectsHeadersAdapter
                 }
+                (holder as ProjectsViewHolder).btnProjectsMore.setOnClickListener {
+                    callback.showAllProjects()
+                }
+
             }
             VIEWTYPE_EXPERIENCE -> {
                 val experience = sections.elementAt(position) as Experience
@@ -191,10 +200,10 @@ class SkillsBulletAdapter(private val bullets: Set<String>) : RecyclerView.Adapt
     }
 }
 
-class ProjectsHeaderAdapter(val context: Context) : RecyclerView.Adapter<ProjectsHeaderAdapter.ProjectsHeaderViewHolder>() {
+open class ProjectsHeaderAdapter(val context: Context) : RecyclerView.Adapter<ProjectsHeaderAdapter.ProjectsHeaderViewHolder>() {
 
-    private val headers = Projects.headers
-    private val dates = Projects.dates
+    val headers = Projects.headers
+    val dates = Projects.dates
 
     class ProjectsHeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvProjectsHeader = view.tv_projects_header
@@ -222,6 +231,12 @@ class ProjectsHeaderAdapter(val context: Context) : RecyclerView.Adapter<Project
             adapter = projectBulletAdapter
         }
     }
+}
+
+class FullProjectsHeaderAdapter(context: Context): ProjectsHeaderAdapter(context) {
+
+    override fun getItemCount() = super.headers.size
+
 }
 
 class ProjectsBulletAdapter(private val bullets: Set<String>) : RecyclerView.Adapter<ProjectsBulletAdapter.ProjectsBulletViewHolder>() {
