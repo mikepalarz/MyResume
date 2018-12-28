@@ -1,13 +1,15 @@
 package com.palarz.mike.myresume.extensions
 
-import android.support.constraint.ConstraintLayout
 import android.support.v7.widget.CardView
-import android.support.v7.widget.RecyclerView
-import android.view.View
+import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.Transformation
 import android.widget.FrameLayout
 
+/*
+  All of this was largely taken from the following SO post:
+  https://stackoverflow.com/questions/41464629/expand-collapse-animation-in-cardview
+*/
 fun CardView.collapse(collapsedHeight: Int) {
 
     val initialHeight = measuredHeight
@@ -29,7 +31,7 @@ fun CardView.collapse(collapsedHeight: Int) {
 fun CardView.expand() {
     val initialHeight = height
 
-    measure(View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED), View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED))
+    measure(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
     val targetHeight = measuredHeight
 
     val distanceToExpand = targetHeight - initialHeight
