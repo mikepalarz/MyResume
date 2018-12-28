@@ -1,12 +1,16 @@
 package com.palarz.mike.myresume.ui.adapter
 
 import android.content.Context
+import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.palarz.mike.myresume.R
+import com.palarz.mike.myresume.extensions.collapse
+import com.palarz.mike.myresume.extensions.expand
+import com.palarz.mike.myresume.extensions.isExpanded
 import com.palarz.mike.myresume.extensions.setBrowserClickListener
 import com.palarz.mike.myresume.model.*
 import kotlinx.android.synthetic.main.list_item_education.view.*
