@@ -51,7 +51,6 @@ class SectionsFragment : Fragment() {
         topicsAdapter = SectionAdapter(sections, activity!!, activityCallback)
 
         recyclerView = view.rv_sections.apply{
-            setHasFixedSize(true)
             layoutManager = manager
             adapter = topicsAdapter
         }

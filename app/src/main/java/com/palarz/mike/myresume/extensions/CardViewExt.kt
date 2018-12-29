@@ -1,53 +1,25 @@
 package com.palarz.mike.myresume.extensions
 
 import android.support.v7.widget.CardView
-import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.Transformation
-import android.widget.FrameLayout
+import android.support.v7.widget.RecyclerView
+import android.view.View
+import android.widget.ImageView
+import com.palarz.mike.myresume.R
 
-/*
-  All of this was largely taken from the following SO post:
-  https://stackoverflow.com/questions/41464629/expand-collapse-animation-in-cardview
-*/
-fun CardView.collapse(collapsedHeight: Int) {
+fun CardView.collapse() {
+    val content = findViewById<RecyclerView>(R.id.rv_content)
+    content.visibility = View.GONE
 
-    val initialHeight = measuredHeight
-    val distanceToCollapse = initialHeight - collapsedHeight
-    val animation = object: Animation() {
-
-        override fun applyTransformation(interpolatedTime: Float, t: Transformation?) {
-            layoutParams.height = (initialHeight - (distanceToCollapse * interpolatedTime)).toInt()
-            requestLayout()
-        }
-
-        override fun willChangeBounds() = true
-    }
-
-    animation.duration = distanceToCollapse.toLong()
-    startAnimation(animation)
+    val arrow = findViewById<ImageView>(R.id.contents_arrow)
+    arrow.setImageResource(R.drawable.arrow_collapsed)
 }
 
 fun CardView.expand() {
-    val initialHeight = height
+    val content = findViewById<RecyclerView>(R.id.rv_content)
+    content.visibility = View.VISIBLE
 
-    measure(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-    val targetHeight = measuredHeight
-
-    val distanceToExpand = targetHeight - initialHeight
-
-    val animation = object : Animation(){
-
-        override fun applyTransformation(interpolatedTime: Float, t: Transformation?) {
-            layoutParams.height = initialHeight + (distanceToExpand * interpolatedTime).toInt()
-            requestLayout()
-        }
-
-        override fun willChangeBounds() = true
-    }
-
-    animation.duration = distanceToExpand.toLong()
-    startAnimation(animation)
+    val arrow = findViewById<ImageView>(R.id.contents_arrow)
+    arrow.setImageResource(R.drawable.arrow_expanded)
 }
 
-fun CardView.isExpanded() = layoutParams.height == FrameLayout.LayoutParams.WRAP_CONTENT
+fun CardView.isExpanded() = findViewById<RecyclerView>(R.id.rv_content).visibility == View.VISIBLE

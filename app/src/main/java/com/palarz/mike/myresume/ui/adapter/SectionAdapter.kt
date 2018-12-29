@@ -44,23 +44,23 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context, v
 
     class SkillsViewHolder(view: View) : SectionViewHolder(view) {
         val tvSkillsSection = view.tv_skills_section
-        val rvSkillsHeaders = view.rv_skills_headers
+        val rvSkillsHeaders = view.findViewById<RecyclerView>(R.id.rv_content)
     }
 
     class ProjectsViewHolder(view: View) : SectionViewHolder(view) {
         val tvProjectsSection = view.tv_projects_section
-        val rvProjectsHeaders = view.rv_projects_headers
+        val rvProjectsHeaders = view.findViewById<RecyclerView>(R.id.rv_content)
         val btnProjectsMore = view.btn_projects_more
     }
 
     class ExperienceViewHolder(view: View) : SectionViewHolder(view) {
         val tvExperienceSection = view.tv_experience_section
-        val rvExperienceCompanies = view.rv_experience_companies
+        val rvExperienceCompanies = view.findViewById<RecyclerView>(R.id.rv_content)
     }
 
     class EducationViewHolder(view: View) : SectionViewHolder(view) {
         val tvEducationSection = view.tv_education_section
-        val rvEducationHeaders = view.rv_education_headers
+        val rvEducationHeaders = view.findViewById<RecyclerView>(R.id.rv_content)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SectionViewHolder = when(viewType) {
@@ -91,13 +91,22 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context, v
     }
 
     override fun onBindViewHolder(holder: SectionViewHolder, position: Int) {
+
+        (holder.itemView as CardView).setOnClickListener {
+            if ((it as CardView).isExpanded()) {
+                it.collapse()
+            } else{
+                it.expand()
+            }
+        }
+
         when(holder.itemViewType) {
             VIEWTYPE_SKILLS -> {
                 val skill = sections.elementAt(position) as Skills
                 (holder as SkillsViewHolder).tvSkillsSection.text = skill.section
                 val skillsHeadersAdapter = SkillsHeaderAdapter(context)
                 val linearLayoutManager = LinearLayoutManager(context)
-                (holder as SkillsViewHolder).rvSkillsHeaders.apply {
+                holder.rvSkillsHeaders.apply {
                     setHasFixedSize(true)
                     layoutManager = linearLayoutManager
                     adapter = skillsHeadersAdapter
@@ -108,11 +117,11 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context, v
                 (holder as ProjectsViewHolder).tvProjectsSection.text = project.section
                 val projectsHeadersAdapter = ProjectsHeaderAdapter(context)
                 val linearLayoutManager = LinearLayoutManager(context)
-                (holder as ProjectsViewHolder).rvProjectsHeaders.apply {
+                holder.rvProjectsHeaders.apply {
                     layoutManager = linearLayoutManager
                     adapter = projectsHeadersAdapter
                 }
-                (holder as ProjectsViewHolder).btnProjectsMore.setOnClickListener {
+                holder.btnProjectsMore.setOnClickListener {
                     callback.showAllProjects()
                 }
 
@@ -122,7 +131,7 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context, v
                 (holder as ExperienceViewHolder).tvExperienceSection.text = experience.section
                 val experienceCompaniesAdapter = ExperienceCompaniesAdapter(context)
                 val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                (holder as ExperienceViewHolder).rvExperienceCompanies.apply {
+                holder.rvExperienceCompanies.apply {
                     layoutManager = linearLayoutManager
                     adapter = experienceCompaniesAdapter
                 }
@@ -132,7 +141,7 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context, v
                 (holder as EducationViewHolder).tvEducationSection.text = education.section
                 val educationAdapter = EducationHeaderAdapter(context)
                 val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                (holder as EducationViewHolder).rvEducationHeaders.apply {
+                holder.rvEducationHeaders.apply {
                     layoutManager = linearLayoutManager
                     adapter = educationAdapter
                 }

@@ -21,15 +21,21 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:text="Education"/>
 
+        <ImageView
+            android:id="@+id/contents_arrow"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:src="@drawable/arrow_expanded"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_education_headers"
+            android:id="@+id/rv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/tv_education_section"
             app:layout_constraintStart_toStartOf="@id/tv_education_section" />
-
-
 
     </android.support.constraint.ConstraintLayout>
 
