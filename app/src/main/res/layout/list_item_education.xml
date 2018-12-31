@@ -21,6 +21,13 @@
             app:layout_constraintStart_toStartOf="parent"
             tools:text="Education"/>
 
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@id/tv_education_section"/>
+
         <ImageView
             android:id="@+id/contents_arrow"
             android:layout_width="32dp"
@@ -34,7 +41,8 @@
             android:id="@+id/rv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/tv_education_section"
+            android:layout_marginTop="@dimen/base_size"
+            app:layout_constraintTop_toBottomOf="@id/divider"
             app:layout_constraintStart_toStartOf="@id/tv_education_section" />
 
     </android.support.constraint.ConstraintLayout>
