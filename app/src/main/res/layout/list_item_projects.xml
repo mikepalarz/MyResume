@@ -30,8 +30,8 @@
 
         <ImageView
             android:id="@+id/contents_arrow"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="@dimen/arrow_width"
+            android:layout_height="@dimen/arrow_height"
             android:src="@drawable/arrow_expanded"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"/>

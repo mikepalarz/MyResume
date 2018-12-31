@@ -5,6 +5,8 @@
     <dimen name="base_size">8dp</dimen>
     <dimen name="two_increments">16dp</dimen>
     <dimen name="three_increments">24dp</dimen>
+    <dimen name="arrow_width">32dp</dimen>
+    <dimen name="arrow_height">32dp</dimen>
 
     <!--Main activity-->
     <dimen name="headshot_height">100dp</dimen>
