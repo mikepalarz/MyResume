@@ -2,36 +2,21 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/base_size">
+    style="@style/SectionHeaderContainer">
 
 
     <TextView
         android:id="@+id/tv_education_degree"
-        style="@style/TextAppearance.AppCompat.Body1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/SectionHeader"
         android:textAlignment="center"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="M. Sc. in Electrical Engineering" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.67" />
-
     <TextView
         android:id="@+id/tv_education_date"
-        style="@style/TextAppearance.AppCompat.Body1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        style="@style/SectionSubheader"
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/guideline"
         tools:text="May 2015" />
 
     <ImageView

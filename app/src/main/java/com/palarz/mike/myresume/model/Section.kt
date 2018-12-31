@@ -55,14 +55,11 @@ class Experience(section: String) : Section(section) {
         val dates = setOf("January 2012 - Present")
 
         val bullets = setOf(
-            setOf("Perform coverage simulations for public safety and utilities customers for client-facing projects that have a net worth of\n" +
-                    "\$10-\$400 million",
-                "Simulate OTA voice and data traffic to determine if a system has enough capacity without impacting mission-critical voice\n" +
-                        "communications",
+            setOf("Perform coverage simulations for public safety and utilities customers for client-facing projects that have a net worth of \$10-\$400 million",
+                "Simulate OTA voice and data traffic to determine if a system has enough capacity without impacting mission-critical voice communications",
                 "Partake in creative discussions with developers about impactful improvements to UX for proprietary software",
                 "Represent the company by presenting results to both local and international customers (namely Morocco)",
-                "Utilize a well-rounded set of communication skills by mentoring less-experienced engineers, preparing documents and\n" +
-                        "presentation slides for engineering best practices, guiding training sessions, and collaboratively working with other departments."
+                "Utilize a well-rounded set of communication skills by mentoring less-experienced engineers, preparing documents and presentation slides for engineering best practices, guiding training sessions, and collaboratively working with other departments."
             )
         )
     }

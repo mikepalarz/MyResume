@@ -8,4 +8,33 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="SectionHeaderContainer" parent="AppTheme">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">@dimen/base_size</item>
+    </style>
+
+    <style name="SectionHeader" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SectionSubheader" parent="SectionHeader">
+        <item name="android:textStyle">italic</item>
+        <item name="android:layout_marginTop">@dimen/half_increment</item>
+    </style>
+
+    <style name="SectionBullet" parent="TextAppearance.AppCompat.Small">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <style name="BulletsRecyclerView" parent="AppTheme">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">@dimen/half_increment</item>
+    </style>
+
 </resources>

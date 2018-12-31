@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/SectionHeaderContainer">
 
     <TextView
         android:id="@+id/tv_skills_header"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/TextAppearance.AppCompat.Body1"
+        style="@style/SectionHeader"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:text="Programming Languages"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_skills_bullets"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/BulletsRecyclerView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_skills_header"/>
 
