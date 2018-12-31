@@ -8,8 +8,8 @@
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Dark">
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -18,6 +18,8 @@
             android:background="?attr/colorPrimary"
             android:elevation="@dimen/half_increment"
             android:minHeight="?attr/actionBarSize"
+            app:contentInsetStart="@dimen/no_increment"
+            app:contentInsetLeft="@dimen/no_increment"
             app:layout_scrollFlags="scroll|enterAlways">
 
             <android.support.constraint.ConstraintLayout
@@ -52,15 +54,15 @@
                     android:layout_height="wrap_content"
                     android:text="@string/headline"
                     android:textAlignment="center"
-                    style="@style/TextAppearance.AppCompat.Caption"
-                    android:layout_marginTop="@dimen/base_size"
-                    android:layout_marginLeft="@dimen/base_size"
-                    android:layout_marginStart="@dimen/base_size"
-                    android:layout_marginRight="@dimen/base_size"
-                    android:layout_marginEnd="@dimen/base_size"
+                    android:textStyle="italic"
+                    android:textColor="?android:attr/textColorSecondary"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_marginTop="@dimen/two_increments"
+                    android:layout_marginBottom="@dimen/two_increments"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/headshot"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     />
 
 
