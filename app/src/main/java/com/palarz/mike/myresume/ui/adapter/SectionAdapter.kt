@@ -32,11 +32,8 @@ private const val VIEWTYPE_PROJECTS = 2
 private const val VIEWTYPE_EXPERIENCE = 3
 private const val VIEWTYPE_EDUCATION = 4
 
-interface MoreButtonCallback {
-    fun showAllProjects()
-}
 
-class SectionAdapter(private val sections: Set<Section>, val context: Context, val callback: MoreButtonCallback) : RecyclerView.Adapter<SectionAdapter.SectionViewHolder>(){
+class SectionAdapter(private val sections: Set<Section>, val context: Context) : RecyclerView.Adapter<SectionAdapter.SectionViewHolder>(){
 
     open class SectionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvSection = view.tv_section
@@ -50,7 +47,6 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context, v
     class ProjectsViewHolder(view: View) : SectionViewHolder(view) {
         val tvProjectsSection = view.tv_projects_section
         val rvProjectsHeaders = view.findViewById<RecyclerView>(R.id.rv_content)
-        val btnProjectsMore = view.btn_projects_more
     }
 
     class ExperienceViewHolder(view: View) : SectionViewHolder(view) {
@@ -120,9 +116,6 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context, v
                 holder.rvProjectsHeaders.apply {
                     layoutManager = linearLayoutManager
                     adapter = projectsHeadersAdapter
-                }
-                holder.btnProjectsMore.setOnClickListener {
-                    callback.showAllProjects()
                 }
 
             }
@@ -244,12 +237,6 @@ open class ProjectsHeaderAdapter(val context: Context) : RecyclerView.Adapter<Pr
             adapter = projectBulletAdapter
         }
     }
-}
-
-class FullProjectsHeaderAdapter(context: Context): ProjectsHeaderAdapter(context) {
-
-    override fun getItemCount() = super.headers.size
-
 }
 
 class ProjectsBulletAdapter(private val bullets: Set<String>) : RecyclerView.Adapter<ProjectsBulletAdapter.ProjectsBulletViewHolder>() {
