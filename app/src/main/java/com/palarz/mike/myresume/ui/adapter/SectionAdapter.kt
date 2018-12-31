@@ -230,7 +230,7 @@ open class ProjectsHeaderAdapter(val context: Context) : RecyclerView.Adapter<Pr
         return ProjectsHeaderViewHolder(listItem)
     }
 
-    override fun getItemCount() = 1
+    override fun getItemCount() = headers.size
 
     override fun onBindViewHolder(holder: ProjectsHeaderViewHolder, position: Int) {
         holder.tvProjectsHeader.text = headers.elementAt(position)
