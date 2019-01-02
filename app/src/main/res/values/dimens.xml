@@ -17,4 +17,8 @@
     <dimen name="school_logo_height">50dp</dimen>
     <dimen name="school_logo_width">150dp</dimen>
 
+    <!--Projects-->
+    <dimen name="github_logo_height">24dp</dimen>
+    <dimen name="github_logo_width">24dp</dimen>
+
 </resources>

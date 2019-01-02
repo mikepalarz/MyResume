@@ -15,9 +15,18 @@
         android:id="@+id/tv_projects_date"
         style="@style/SectionSubheader"
         android:layout_marginTop="@dimen/no_increment"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/iv_github_logo"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="October 2018" />
+
+    <ImageView
+        android:id="@+id/iv_github_logo"
+        android:layout_width="@dimen/github_logo_width"
+        android:layout_height="@dimen/github_logo_height"
+        android:src="@drawable/github_logo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_projects_bullets"

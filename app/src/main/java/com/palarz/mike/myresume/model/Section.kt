@@ -36,6 +36,11 @@ class Projects(section: String) : Section(section) {
             setOf("Wrote a VBA macro that performed data processing in order to determine the number of RF channels needed per site for a project estimated to be worth ~\$400 million",
                 "Provided data-driven statistics from the traffic data which guided the team towards a more competitive approach to the capacity study")
         )
+        val urls = listOf("https://github.com/mikepalarz/JammyJamz",
+                        "https://github.com/mikepalarz/TheJoker",
+                        "https://github.com/mikepalarz/BakingApp",
+                        "",
+                        "")
     }
 }
 

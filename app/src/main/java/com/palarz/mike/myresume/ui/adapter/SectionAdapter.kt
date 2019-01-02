@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import com.palarz.mike.myresume.R
 import com.palarz.mike.myresume.extensions.collapse
 import com.palarz.mike.myresume.extensions.expand
@@ -210,10 +211,12 @@ open class ProjectsHeaderAdapter(val context: Context) : RecyclerView.Adapter<Pr
 
     val headers = Projects.headers
     val dates = Projects.dates
+    val urls = Projects.urls
 
     class ProjectsHeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvProjectsHeader = view.tv_projects_header
         val tvProjectsDate = view.tv_projects_date
+        val ivGithubLogo = view.findViewById<ImageView>(R.id.iv_github_logo)
         val rvBullets = view.rv_projects_bullets
     }
 
@@ -228,6 +231,11 @@ open class ProjectsHeaderAdapter(val context: Context) : RecyclerView.Adapter<Pr
     override fun onBindViewHolder(holder: ProjectsHeaderViewHolder, position: Int) {
         holder.tvProjectsHeader.text = headers.elementAt(position)
         holder.tvProjectsDate.text = dates.elementAt(position)
+        if (urls.elementAt(position).isEmpty()) {
+            holder.ivGithubLogo.visibility = View.GONE
+        } else {
+            holder.ivGithubLogo.setBrowserClickListener(urls.elementAt(position), context)
+        }
 
         val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         val projectBulletAdapter = ProjectsBulletAdapter(Projects.bullets.elementAt(position))
