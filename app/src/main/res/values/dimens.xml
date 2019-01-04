@@ -21,4 +21,9 @@
     <dimen name="github_logo_height">24dp</dimen>
     <dimen name="github_logo_width">24dp</dimen>
 
+    <!--Contact Me Dialog-->
+    <dimen name="contact_me_dialog_icon_height">28dp</dimen>
+    <dimen name="contact_me_dialog_icon_width">28dp</dimen>
+    <dimen name="contact_me_dialog_list_item_text_size">18sp</dimen>
+
 </resources>

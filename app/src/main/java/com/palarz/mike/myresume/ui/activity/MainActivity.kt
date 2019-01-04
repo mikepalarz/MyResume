@@ -2,13 +2,15 @@ package com.palarz.mike.myresume.ui.activity
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.ImageView
 import com.palarz.mike.myresume.R
+import com.palarz.mike.myresume.ui.fragment.ContactMeDialogFragment
 import com.palarz.mike.myresume.ui.fragment.SectionsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
-    
+
 //    TODO: Create a dialog that pops up for the on-click of your headshot, with contact options
 //    TODO: Add images for your different social profiles
 //    TODO: Update the content, w/ more recent projects that you've worked on
@@ -25,6 +27,11 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setDisplayShowTitleEnabled(false)
+
+        findViewById<ImageView>(R.id.headshot).setOnClickListener {
+            val contactMe = ContactMeDialogFragment()
+            contactMe.show(supportFragmentManager, "")
+        }
 
     }
 }

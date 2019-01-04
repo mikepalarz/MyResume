@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/base_size">
+
+    <TextView
+        android:id="@+id/dialog_contact_me_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:text="@string/contact_me_dialog_title"
+        android:textAlignment="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="@dimen/base_size"
+        app:layout_constraintTop_toBottomOf="@id/dialog_contact_me_title"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/dialog_contact_me_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/base_size"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/phone"
+            android:textSize="@dimen/contact_me_dialog_list_item_text_size"
+            android:textColor="@android:color/primary_text_light"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:layout_width="@dimen/contact_me_dialog_icon_width"
+            android:layout_height="@dimen/contact_me_dialog_icon_height"
+            android:src="@drawable/phone_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="@dimen/base_size"
+        app:layout_constraintTop_toBottomOf="@id/dialog_contact_me_phone"/>
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/dialog_contact_me_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/base_size"
+        app:layout_constraintTop_toBottomOf="@id/divider2"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/email"
+            android:textSize="@dimen/contact_me_dialog_list_item_text_size"
+            android:textColor="@android:color/primary_text_light"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:layout_width="@dimen/contact_me_dialog_icon_width"
+            android:layout_height="@dimen/contact_me_dialog_icon_height"
+            android:src="@drawable/email_icon"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </android.support.constraint.ConstraintLayout>
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_marginTop="@dimen/base_size"
+        app:layout_constraintTop_toBottomOf="@id/dialog_contact_me_email"/>
+
+    <TextView
+        android:id="@+id/dialog_contact_me_close"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/contact_me_dialog_close"
+        android:textSize="@dimen/contact_me_dialog_list_item_text_size"
+        android:textColor="@android:color/primary_text_light"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/base_size"
+        android:layout_marginBottom="@dimen/base_size"
+        app:layout_constraintTop_toBottomOf="@id/divider3"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>
