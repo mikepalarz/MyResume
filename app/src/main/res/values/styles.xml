@@ -37,4 +37,10 @@
         <item name="android:layout_marginTop">@dimen/half_increment</item>
     </style>
 
+    <style name="SocialLogo" parent="AppTheme">
+        <item name="android:layout_height">@dimen/logo_social_height</item>
+        <item name="android:layout_width">@dimen/logo_social_width</item>
+        <item name="android:scaleType">centerCrop</item>
+    </style>
+
 </resources>

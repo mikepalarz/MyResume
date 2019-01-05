@@ -14,4 +14,9 @@
     <string name="phone">Phone</string>
     <string name="email">E-Mail</string>
 
+    <!--Social logo links-->
+    <string name="github_link">https://github.com/mikepalarz</string>
+    <string name="twitter_link">https://twitter.com/mpalarz</string>
+    <string name="linkedin_link">https://www.linkedin.com/in/mikepalarz/</string>
+
 </resources>

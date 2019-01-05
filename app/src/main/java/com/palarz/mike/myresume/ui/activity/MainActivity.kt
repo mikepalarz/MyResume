@@ -11,7 +11,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-//    TODO: Create a dialog that pops up for the on-click of your headshot, with contact options
 //    TODO: Add images for your different social profiles
 //    TODO: Update the content, w/ more recent projects that you've worked on
 

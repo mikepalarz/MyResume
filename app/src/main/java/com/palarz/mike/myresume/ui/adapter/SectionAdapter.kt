@@ -216,7 +216,7 @@ open class ProjectsHeaderAdapter(val context: Context) : RecyclerView.Adapter<Pr
     class ProjectsHeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvProjectsHeader = view.tv_projects_header
         val tvProjectsDate = view.tv_projects_date
-        val ivGithubLogo = view.findViewById<ImageView>(R.id.iv_github_logo)
+        val ivGithubLogo = view.findViewById<ImageView>(R.id.iv_github_logo_project)
         val rvBullets = view.rv_projects_bullets
     }
 
