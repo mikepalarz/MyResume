@@ -11,8 +11,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-//    TODO: Add images for your different social profiles
 //    TODO: Update the content, w/ more recent projects that you've worked on
+//    TODO: Add a link to see your resume as a regular PDF document
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

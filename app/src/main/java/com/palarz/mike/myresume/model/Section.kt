@@ -7,10 +7,10 @@ class Skills(section: String) : Section(section) {
     companion object {
         val headers = setOf("Programming Languages", "Third-Party Libraries", "Packages/Frameworks", "Miscellaneous")
         val bullets = setOf(
-                        setOf("Java", "VBA", "Python", "Google Apps Script", "C++", "Ruby"),
-                        setOf("Picasso", "Butterknife", "Retrofit", "ExoPlayer", "Timber"),
+                        setOf("Java", "Kotlin", "VBA", "Python", "Google Apps Script", "C++", "Ruby"),
+                        setOf("Picasso", "Butterknife", "RxJava", "Retrofit", "ExoPlayer", "Timber"),
                         setOf("Firebase", "SQLite", "Espresso", "Gradle", "Maven"),
-                        setOf("git", "GitHub", "RegEx", "Bash")
+                        setOf("git", "GitHub", "RegEx", "Bash", "Agile development", "JIRA")
         )
     }
 }
@@ -18,9 +18,12 @@ class Skills(section: String) : Section(section) {
 class Projects(section: String) : Section(section) {
 
     companion object {
-        val headers = setOf("JammyJamz Android App", "The Joker Android App", "Baking Recipes Android App", "Voice Traffic Automator", "Voice Traffic Data Processing")
-        val dates = setOf("October 2018", "January 2018", "November 2017", "June 2018", "August 2017")
+        val headers = setOf("Voyager Android", "JammyJamz Android App", "The Joker Android App", "Baking Recipes Android App", "Voice Traffic Automator", "Voice Traffic Data Processing")
+        val dates = setOf("Present", "October 2018", "January 2018", "November 2017", "June 2018", "August 2017")
         val bullets = setOf(
+            setOf("Created a custom, enterprise-grade authenticator which adheres to OAuth 2.0 for Motorola employee login",
+                "Configured network security so that CA files are included directly within codebase and VPN access is granted",
+                "Partake in an agile development process by working through 2-week sprints and responsibly managing JIRA tasks"),
             setOf("Created a social network for music enthusiasts centered around sharing musical interests",
                 "Utilized FirebaseUI for user authentication and Realtime Database for storing user-generated content",
                 "Provided a search interface which involved using the Spotify Web API and properly handling the OAuth client credentials flow"),
@@ -36,7 +39,8 @@ class Projects(section: String) : Section(section) {
             setOf("Wrote a VBA macro that performed data processing in order to determine the number of RF channels needed per site for a project estimated to be worth ~\$400 million",
                 "Provided data-driven statistics from the traffic data which guided the team towards a more competitive approach to the capacity study")
         )
-        val urls = listOf("https://github.com/mikepalarz/JammyJamz",
+        val urls = listOf("",
+                        "https://github.com/mikepalarz/JammyJamz",
                         "https://github.com/mikepalarz/TheJoker",
                         "https://github.com/mikepalarz/BakingApp",
                         "",

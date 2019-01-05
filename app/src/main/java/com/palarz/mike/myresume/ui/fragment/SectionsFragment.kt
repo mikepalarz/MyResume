@@ -3,6 +3,7 @@ package com.palarz.mike.myresume.ui.fragment
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -46,6 +47,8 @@ class SectionsFragment : Fragment() {
         recyclerView = view.rv_sections.apply{
             layoutManager = manager
             adapter = topicsAdapter
+            // Had to add this since scrolling is slow within a NestedScrollView without it
+            ViewCompat.setNestedScrollingEnabled(this, false)
         }
 
         ivGithubLogo = view.iv_github_logo_social.apply {
