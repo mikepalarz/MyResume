@@ -36,11 +36,12 @@
                 app:layout_constraintTop_toTopOf="parent"/>
 
             <ImageView
-                android:id="@+id/iv_linkedin_logo_social"
+                android:id="@+id/iv_adobe_acrobat_logo_social"
                 style="@style/SocialLogo"
-                android:src="@drawable/linkedin_logo"
+                android:src="@drawable/adobe_acrobat_logo"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintStart_toEndOf="@id/iv_github_logo_social"
+                app:layout_constraintEnd_toStartOf="@id/iv_twitter_logo_social"/>
 
             <ImageView
                 android:id="@+id/iv_twitter_logo_social"
@@ -48,7 +49,14 @@
                 android:src="@drawable/twitter_logo"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/iv_linkedin_logo_social"
-                app:layout_constraintStart_toEndOf="@id/iv_github_logo_social"/>
+                app:layout_constraintStart_toEndOf="@id/iv_adobe_acrobat_logo_social"/>
+
+            <ImageView
+                android:id="@+id/iv_linkedin_logo_social"
+                style="@style/SocialLogo"
+                android:src="@drawable/linkedin_logo"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
 
         </android.support.constraint.ConstraintLayout>

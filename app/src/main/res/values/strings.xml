@@ -8,6 +8,9 @@
     <!--Main activity-->
     <string name="headline">Android developer passionate about the holistic approach</string>
 
+    <!--Sections fragment-->
+    <string name="app_chooser_title">Please select an app</string>
+
     <!--Contact Me Dialog-->
     <string name="contact_me_dialog_title">Would you like to contact Mike?</string>
     <string name="contact_me_dialog_close">Close</string>
