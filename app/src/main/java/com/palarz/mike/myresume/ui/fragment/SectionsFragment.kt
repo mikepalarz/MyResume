@@ -6,15 +6,18 @@ import android.content.res.AssetManager
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.content.FileProvider
 import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import com.palarz.mike.myresume.BuildConfig
 import com.palarz.mike.myresume.R
-import com.palarz.mike.myresume.extensions.getFile
+import com.palarz.mike.myresume.extensions.getResumeFile
 import com.palarz.mike.myresume.extensions.setBrowserClickListener
 import com.palarz.mike.myresume.ui.adapter.SectionAdapter
 import com.palarz.mike.myresume.model.Education
@@ -68,20 +71,22 @@ class SectionsFragment : Fragment() {
             setBrowserClickListener(getString(R.string.linkedin_link), context)
         }
 
-        // TODO: Consider using a WebView for this instead and using an HTML file within res/raw. This way, you
-        // don't need to be writing to external storage and requiring the permission for this.
+        // TODO: Consider using a WebView for this instead and using an HTML file within res/raw. Why? Well, I suppose
+        // just to play around with WebViews :D
         ivAdobeLogo = view.iv_adobe_acrobat_logo_social
         ivAdobeLogo.setOnClickListener {
             val pdfIntent = Intent(Intent.ACTION_VIEW)
-            val file = context?.assets?.getFile(getString(R.string.resume_file_name), context!!)
+            val file = resources.getResumeFile(context!!)
+            val uri = FileProvider.getUriForFile(context!!, "${BuildConfig.APPLICATION_ID}.fileprovider", file)
+            Log.d("SectionsFragment", "Uri: $uri")
+
             val chooserTitle = resources.getString(R.string.app_chooser_title)
+
             pdfIntent.apply {
-                type = "application/pdf"
-//                data = Uri.parse("file:///${file?.path}")
-//                data = Uri.fromFile(file)
-//                type = "application/pdf"
-                setDataAndType(Uri.fromFile(file), "application/pdf")
+                setDataAndType(uri, "application/pdf")
+                flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
                 val chooser = Intent.createChooser(this, chooserTitle)
+                // Checking if there's an activity to handle pdfIntent
                 if (pdfIntent.resolveActivity(activity?.packageManager) != null) {
                     context?.startActivity(chooser)
                 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!--For the purposes of this app, I'm okay (for now) with sharing all files within the root folder of my app's
+    internal directory. This may change in future developments.-->
+    <files-path name="root" path="." />
+</paths>

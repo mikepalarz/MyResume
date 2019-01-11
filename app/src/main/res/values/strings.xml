@@ -4,6 +4,7 @@
     <string name="my_name">Mike Palarz</string>
     <string name="my_phone_number">+1708-334-0504</string>
     <string name="my_email">mpalarz1@gmail.com</string>
+    <string name="resume_file_name">Resume_January2019.pdf</string>
 
     <!--Main activity-->
     <string name="headline">Android developer passionate about the holistic approach</string>
