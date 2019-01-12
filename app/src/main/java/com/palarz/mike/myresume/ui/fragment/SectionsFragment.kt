@@ -78,7 +78,6 @@ class SectionsFragment : Fragment() {
             val pdfIntent = Intent(Intent.ACTION_VIEW)
             val file = resources.getResumeFile(context!!)
             val uri = FileProvider.getUriForFile(context!!, "${BuildConfig.APPLICATION_ID}.fileprovider", file)
-            Log.d("SectionsFragment", "Uri: $uri")
 
             val chooserTitle = resources.getString(R.string.app_chooser_title)
 
