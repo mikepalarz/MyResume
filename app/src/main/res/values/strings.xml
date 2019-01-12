@@ -1,6 +1,6 @@
 <resources>
     <!--Global-->
-    <string name="app_name">MyResume</string>
+    <string name="app_name">Mike Palarz Resume</string>
     <string name="my_name">Mike Palarz</string>
     <string name="my_phone_number">+1708-334-0504</string>
     <string name="my_email">mpalarz1@gmail.com</string>
