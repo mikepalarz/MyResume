@@ -10,4 +10,4 @@
 /captures
 .externalNativeBuild
 keystore.properties
-app/keystore.jks
+/app/keystore.jks
