@@ -4,6 +4,7 @@ import android.content.Context
 import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +27,7 @@ import kotlinx.android.synthetic.main.list_item_section.view.*
 import kotlinx.android.synthetic.main.list_item_skills.view.*
 import kotlinx.android.synthetic.main.list_item_skills_bullet.view.*
 import kotlinx.android.synthetic.main.list_item_skills_headers.view.*
+import timber.log.Timber
 
 private const val VIEWTYPE_GENERIC = 0
 private const val VIEWTYPE_SKILLS = 1
@@ -43,6 +45,7 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
     class SkillsViewHolder(view: View) : SectionViewHolder(view) {
         val tvSkillsSection = view.tv_skills_section
         val rvSkillsHeaders = view.findViewById<RecyclerView>(R.id.rv_content)
+        var maxHeight = rvSkillsHeaders.measuredHeight
     }
 
     class ProjectsViewHolder(view: View) : SectionViewHolder(view) {
@@ -63,7 +66,18 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SectionViewHolder = when(viewType) {
         VIEWTYPE_SKILLS -> {
             val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_skills, parent, false)
-            SkillsViewHolder(listItem)
+            val viewHolder = SkillsViewHolder(listItem)
+
+            // Starting point for determining max height of RV that can later be used for animations
+            viewHolder.rvSkillsHeaders.viewTreeObserver.addOnDrawListener{
+                val height = viewHolder.rvSkillsHeaders.measuredHeight
+                if (height > viewHolder.maxHeight) {
+                    viewHolder.maxHeight = height
+                }
+                Timber.d("Height of RecyclerView: ${viewHolder.maxHeight}")
+            }
+
+            viewHolder
         }
 
         VIEWTYPE_PROJECTS -> {
@@ -89,6 +103,7 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
 
     override fun onBindViewHolder(holder: SectionViewHolder, position: Int) {
 
+        // TODO: This probably doesn't belong here... Move this over in your next commit.
         (holder.itemView as CardView).setOnClickListener {
             if ((it as CardView).isExpanded()) {
                 it.collapse()
@@ -101,6 +116,7 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
             VIEWTYPE_SKILLS -> {
                 val skill = sections.elementAt(position) as Skills
                 (holder as SkillsViewHolder).tvSkillsSection.text = skill.section
+//                Timber.tag("SectionAdapter").d("Height of RecyclerView: ${holder.maxHeight}")
                 val skillsHeadersAdapter = SkillsHeaderAdapter(context)
                 val linearLayoutManager = LinearLayoutManager(context)
                 holder.rvSkillsHeaders.apply {
