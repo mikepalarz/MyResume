@@ -4,16 +4,12 @@ import android.content.Context
 import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import com.palarz.mike.myresume.R
-import com.palarz.mike.myresume.extensions.collapse
-import com.palarz.mike.myresume.extensions.expand
-import com.palarz.mike.myresume.extensions.isExpanded
-import com.palarz.mike.myresume.extensions.setBrowserClickListener
+import com.palarz.mike.myresume.extensions.*
 import com.palarz.mike.myresume.model.*
 import kotlinx.android.synthetic.main.list_item_education.view.*
 import kotlinx.android.synthetic.main.list_item_education_headers.view.*
@@ -51,16 +47,19 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
     class ProjectsViewHolder(view: View) : SectionViewHolder(view) {
         val tvProjectsSection = view.tv_projects_section
         val rvProjectsHeaders = view.findViewById<RecyclerView>(R.id.rv_content)
+        var maxHeight = rvProjectsHeaders.measuredHeight
     }
 
     class ExperienceViewHolder(view: View) : SectionViewHolder(view) {
         val tvExperienceSection = view.tv_experience_section
         val rvExperienceCompanies = view.findViewById<RecyclerView>(R.id.rv_content)
+        var maxHeight = rvExperienceCompanies.measuredHeight
     }
 
     class EducationViewHolder(view: View) : SectionViewHolder(view) {
         val tvEducationSection = view.tv_education_section
         val rvEducationHeaders = view.findViewById<RecyclerView>(R.id.rv_content)
+        var maxHeight = rvEducationHeaders.measuredHeight
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SectionViewHolder = when(viewType) {
@@ -68,13 +67,11 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
             val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_skills, parent, false)
             val viewHolder = SkillsViewHolder(listItem)
 
-            // Starting point for determining max height of RV that can later be used for animations
             viewHolder.rvSkillsHeaders.viewTreeObserver.addOnDrawListener{
                 val height = viewHolder.rvSkillsHeaders.measuredHeight
                 if (height > viewHolder.maxHeight) {
                     viewHolder.maxHeight = height
                 }
-                Timber.d("Height of RecyclerView: ${viewHolder.maxHeight}")
             }
 
             viewHolder
@@ -82,17 +79,45 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
 
         VIEWTYPE_PROJECTS -> {
             val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_projects, parent, false)
-            ProjectsViewHolder(listItem)
+            val viewHolder = ProjectsViewHolder(listItem)
+
+            viewHolder.rvProjectsHeaders.viewTreeObserver.addOnDrawListener{
+                val height = viewHolder.rvProjectsHeaders.measuredHeight
+                if (height > viewHolder.maxHeight) {
+                    viewHolder.maxHeight = height
+                }
+            }
+
+            viewHolder
         }
 
         VIEWTYPE_EXPERIENCE -> {
             val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_experience, parent, false)
-            ExperienceViewHolder(listItem)
+            val viewHolder = ExperienceViewHolder(listItem)
+
+            viewHolder.rvExperienceCompanies.viewTreeObserver.addOnDrawListener{
+                val height = viewHolder.rvExperienceCompanies.measuredHeight
+                if (height > viewHolder.maxHeight) {
+                    viewHolder.maxHeight = height
+                }
+            }
+
+            viewHolder
         }
 
         VIEWTYPE_EDUCATION -> {
             val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_education, parent, false)
-            EducationViewHolder(listItem)
+
+            val viewHolder = EducationViewHolder(listItem)
+
+            viewHolder.rvEducationHeaders.viewTreeObserver.addOnDrawListener{
+                val height = viewHolder.rvEducationHeaders.measuredHeight
+                if (height > viewHolder.maxHeight) {
+                    viewHolder.maxHeight = height
+                }
+            }
+
+            viewHolder
         }
 
         else -> {
@@ -103,20 +128,10 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
 
     override fun onBindViewHolder(holder: SectionViewHolder, position: Int) {
 
-        // TODO: This probably doesn't belong here... Move this over in your next commit.
-        (holder.itemView as CardView).setOnClickListener {
-            if ((it as CardView).isExpanded()) {
-                it.collapse()
-            } else{
-                it.expand()
-            }
-        }
-
         when(holder.itemViewType) {
             VIEWTYPE_SKILLS -> {
                 val skill = sections.elementAt(position) as Skills
                 (holder as SkillsViewHolder).tvSkillsSection.text = skill.section
-//                Timber.tag("SectionAdapter").d("Height of RecyclerView: ${holder.maxHeight}")
                 val skillsHeadersAdapter = SkillsHeaderAdapter(context)
                 val linearLayoutManager = LinearLayoutManager(context)
                 holder.rvSkillsHeaders.apply {
@@ -124,6 +139,14 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
                     layoutManager = linearLayoutManager
                     adapter = skillsHeadersAdapter
                 }
+                holder.itemView.setOnClickListener {
+                    if ((it as CardView).isCollapsed()) {
+                        it.expand(holder.maxHeight)
+                    } else {
+                        it.collapse()
+                    }
+                }
+
             }
             VIEWTYPE_PROJECTS -> {
                 val project = sections.elementAt(position) as Projects
@@ -133,6 +156,13 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
                 holder.rvProjectsHeaders.apply {
                     layoutManager = linearLayoutManager
                     adapter = projectsHeadersAdapter
+                }
+                holder.itemView.setOnClickListener {
+                    if ((it as CardView).isCollapsed()) {
+                        it.expand(holder.maxHeight)
+                    } else {
+                        it.collapse()
+                    }
                 }
 
             }
@@ -145,6 +175,13 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
                     layoutManager = linearLayoutManager
                     adapter = experienceCompaniesAdapter
                 }
+                holder.itemView.setOnClickListener {
+                    if ((it as CardView).isCollapsed()) {
+                        it.expand(holder.maxHeight)
+                    } else {
+                        it.collapse()
+                    }
+                }
             }
             VIEWTYPE_EDUCATION -> {
                 val education = sections.elementAt(position) as Education
@@ -154,6 +191,13 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
                 holder.rvEducationHeaders.apply {
                     layoutManager = linearLayoutManager
                     adapter = educationAdapter
+                }
+                holder.itemView.setOnClickListener {
+                    if ((it as CardView).isCollapsed()) {
+                        it.expand(holder.maxHeight)
+                    } else {
+                        it.collapse()
+                    }
                 }
             }
             else -> {
