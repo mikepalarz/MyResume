@@ -39,17 +39,23 @@ fun CardView.collapse() {
         duration = 1000
     }
 
+    val fadeAnimator = ValueAnimator.ofFloat(1f, 0f).apply {
+        addUpdateListener { updatedAnimation ->
+            content.alpha = updatedAnimation.animatedValue as Float
+        }
+        duration = 1000
+    }
+
     val arrowAnimator = ValueAnimator.ofFloat(00f, 180f).apply {
         addUpdateListener { updatedAnimation ->
             arrow.rotation = updatedAnimation.animatedValue as Float
         }
 
-        duration = 1000
-        startDelay = 250
+        duration = 500
     }
 
     AnimatorSet().apply {
-        playTogether(rvAnimator, arrowAnimator)
+        playTogether(rvAnimator, fadeAnimator, arrowAnimator)
         start()
     }
 
@@ -76,17 +82,23 @@ fun CardView.expand(maxHeight: Int) {
         duration = 1000
     }
 
+    val fadeAnimator = ValueAnimator.ofFloat(0f, 1f).apply {
+        addUpdateListener { updatedAnimation ->
+            content.alpha = updatedAnimation.animatedValue as Float
+        }
+        duration = 1000
+    }
+
     val arrowAnimator = ValueAnimator.ofFloat(180f, 0f).apply {
         addUpdateListener { updatedAnimation ->
             arrow.rotation = updatedAnimation.animatedValue as Float
         }
 
-        duration = 1000
-        startDelay = 250
+        duration = 500
     }
 
     AnimatorSet().apply {
-        playTogether(rvAnimator, arrowAnimator)
+        playTogether(rvAnimator, fadeAnimator, arrowAnimator)
         start()
     }
 
