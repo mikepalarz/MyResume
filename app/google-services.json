@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "473189480795",
+    "firebase_url": "https://myresume-57093.firebaseio.com",
+    "project_id": "myresume-57093",
+    "storage_bucket": "myresume-57093.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:473189480795:android:0aa5658f3cf55f77",
+        "android_client_info": {
+          "package_name": "com.palarz.mike.myresume"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "473189480795-j0u5aka5409tne5kfub3bhn5i4m6agmt.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.palarz.mike.myresume",
+            "certificate_hash": "212cc2b541069957d39f9773e0de5288121bacd1"
+          }
+        },
+        {
+          "client_id": "473189480795-8v7v5svtmi73vkmdcc4k5vtphul1o993.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0PhkcskE-_X4fJ-lQla-qZRoh1rBjqTM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "473189480795-8v7v5svtmi73vkmdcc4k5vtphul1o993.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
