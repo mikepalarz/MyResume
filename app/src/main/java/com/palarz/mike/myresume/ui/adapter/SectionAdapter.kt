@@ -131,7 +131,7 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
         when(holder.itemViewType) {
             VIEWTYPE_SKILLS -> {
                 val skill = sections.elementAt(position) as Skills
-                (holder as SkillsViewHolder).tvSkillsSection.text = skill.section
+                (holder as SkillsViewHolder).tvSkillsSection.text = skill.sectionName
                 val skillsHeadersAdapter = SkillsHeaderAdapter(context)
                 val linearLayoutManager = LinearLayoutManager(context)
                 holder.rvSkillsHeaders.apply {
@@ -150,7 +150,7 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
             }
             VIEWTYPE_PROJECTS -> {
                 val project = sections.elementAt(position) as Projects
-                (holder as ProjectsViewHolder).tvProjectsSection.text = project.section
+                (holder as ProjectsViewHolder).tvProjectsSection.text = project.sectionName
                 val projectsHeadersAdapter = ProjectsHeaderAdapter(context)
                 val linearLayoutManager = LinearLayoutManager(context)
                 holder.rvProjectsHeaders.apply {
@@ -168,7 +168,7 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
             }
             VIEWTYPE_EXPERIENCE -> {
                 val experience = sections.elementAt(position) as Experience
-                (holder as ExperienceViewHolder).tvExperienceSection.text = experience.section
+                (holder as ExperienceViewHolder).tvExperienceSection.text = experience.sectionName
                 val experienceCompaniesAdapter = ExperienceCompaniesAdapter(context)
                 val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 holder.rvExperienceCompanies.apply {
@@ -185,7 +185,7 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
             }
             VIEWTYPE_EDUCATION -> {
                 val education = sections.elementAt(position) as Education
-                (holder as EducationViewHolder).tvEducationSection.text = education.section
+                (holder as EducationViewHolder).tvEducationSection.text = education.sectionName
                 val educationAdapter = EducationHeaderAdapter(context)
                 val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 holder.rvEducationHeaders.apply {
@@ -201,7 +201,7 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
                 }
             }
             else -> {
-                holder.tvSection.text = sections.elementAt(position).section
+                holder.tvSection.text = sections.elementAt(position).sectionName
             }
         }
 

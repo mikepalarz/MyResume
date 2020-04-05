@@ -1,10 +1,14 @@
 package com.palarz.mike.myresume.model
 
-open class Section(val section: String)
+abstract class Section {
+    abstract val sectionName: String
+}
 
-class Skills(section: String) : Section(section) {
+class Skills : Section() {
+    override val sectionName: String = skillsSectionName
 
     companion object {
+        const val skillsSectionName = "Skills"
         val headers = setOf("Programming Languages", "Third-Party Libraries", "Packages/Frameworks", "Miscellaneous")
         val bullets = setOf(
                         setOf("Java", "Kotlin", "VBA", "Python", "Google Apps Script", "C++", "Ruby"),
@@ -15,9 +19,12 @@ class Skills(section: String) : Section(section) {
     }
 }
 
-class Projects(section: String) : Section(section) {
+class Projects : Section() {
+
+    override val sectionName: String = projectsSectionName
 
     companion object {
+        const val projectsSectionName = "Projects"
         val headers = setOf("Voyager Android", "JammyJamz Android App", "The Joker Android App", "Baking Recipes Android App", "Voice Traffic Automator", "Voice Traffic Data Processing")
         val dates = setOf("Present", "October 2018", "January 2018", "November 2017", "June 2018", "August 2017")
         val bullets = setOf(
@@ -48,13 +55,11 @@ class Projects(section: String) : Section(section) {
     }
 }
 
-class Experience(section: String) : Section(section) {
+class Experience : Section() {
+    override val sectionName = experienceSectionName
 
-    /*
-    For now, I'm only including one experience within my resume. However, I've created my companion object so that if
-    I choose to add more experiences in the future, it will be easy to do so.
-     */
     companion object {
+        const val experienceSectionName = "Experience"
         val companies = setOf("Motorola Solutions Inc.")
         val positions = setOf("Senior Systems Engineer")
         val locations = setOf("Chicago, IL")
@@ -65,14 +70,17 @@ class Experience(section: String) : Section(section) {
                 "Simulate OTA voice and data traffic to determine if a system has enough capacity without impacting mission-critical voice communications",
                 "Partake in creative discussions with developers about impactful improvements to UX for proprietary software",
                 "Represent the company by presenting results to both local and international customers (namely Morocco)",
-                "Utilize a well-rounded set of communication skills by mentoring less-experienced engineers, preparing documents and presentation slides for engineering best practices, guiding training sessions, and collaboratively working with other departments."
+                "Utilize a well-rounded set of communication skillsSectionName by mentoring less-experienced engineers, preparing documents and presentation slides for engineering best practices, guiding training sessions, and collaboratively working with other departments."
             )
         )
     }
 }
 
-class Education(section: String): Section(section) {
+class Education: Section() {
+    override val sectionName = educationSectionName
+
     companion object {
+        const val educationSectionName = "Education"
         val schools = listOf("Udacity", "Illinois Institute of Technology", "Illinois Institute of Technology")
         val degrees = setOf("Android Development Nanodegree", "M. Sc. in Electrical Engineering", "B. Sc. in Electrical Engineering")
         val dates = setOf("October 2018", "May 2015", "December 2012")

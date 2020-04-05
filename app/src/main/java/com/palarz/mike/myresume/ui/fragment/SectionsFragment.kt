@@ -1,16 +1,12 @@
 package com.palarz.mike.myresume.ui.fragment
 
-import android.content.Context
 import android.content.Intent
-import android.content.res.AssetManager
-import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.content.FileProvider
 import android.support.v4.view.ViewCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,19 +15,19 @@ import com.palarz.mike.myresume.BuildConfig
 import com.palarz.mike.myresume.R
 import com.palarz.mike.myresume.extensions.getResumeFile
 import com.palarz.mike.myresume.extensions.setBrowserClickListener
-import com.palarz.mike.myresume.ui.adapter.SectionAdapter
 import com.palarz.mike.myresume.model.Education
 import com.palarz.mike.myresume.model.Experience
 import com.palarz.mike.myresume.model.Projects
 import com.palarz.mike.myresume.model.Skills
+import com.palarz.mike.myresume.ui.adapter.SectionAdapter
 import kotlinx.android.synthetic.main.fragment_sections.view.*
 
 
 private val sections = setOf(
-    Skills("Skills"),
-    Projects("Projects"),
-    Experience("Experience"),
-    Education("Education")
+    Skills(),
+    Projects(),
+    Experience(),
+    Education()
 )
 
 class SectionsFragment : Fragment() {
@@ -71,8 +67,6 @@ class SectionsFragment : Fragment() {
             setBrowserClickListener(getString(R.string.linkedin_link), context)
         }
 
-        // TODO: Consider using a WebView for this instead and using an HTML file within res/raw. Why? Well, I suppose
-        // just to play around with WebViews :D
         ivAdobeLogo = view.iv_adobe_acrobat_logo_social
         ivAdobeLogo.setOnClickListener {
             val pdfIntent = Intent(Intent.ACTION_VIEW)
