@@ -10,7 +10,7 @@ import android.view.View
 import android.widget.ImageView
 import com.palarz.mike.myresume.R
 
-
+// TODO: Holy smokes... Definitely need time to review this.
 // TODO: Possible solution to delayed start: https://blog.danlew.net/2015/10/20/using-hardware-layers-to-improve-animation-performance/
 fun CardView.collapse() {
     val content = findViewById<RecyclerView>(R.id.rv_content)

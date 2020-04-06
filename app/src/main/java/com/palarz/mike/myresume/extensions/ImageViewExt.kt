@@ -7,10 +7,11 @@ import android.widget.ImageView
 
 fun ImageView.setBrowserClickListener(link: String, context: Context) {
     this.setOnClickListener {
-        val intent = Intent()
-        intent.action = Intent.ACTION_VIEW
-        intent.addCategory(Intent.CATEGORY_BROWSABLE)
-        intent.data = Uri.parse(link)
+        val intent = Intent().apply {
+            action = Intent.ACTION_VIEW
+            addCategory(Intent.CATEGORY_BROWSABLE)
+            data = Uri.parse(link)
+        }
         context.startActivity(intent)
     }
 }

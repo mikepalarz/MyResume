@@ -31,8 +31,11 @@ private const val VIEWTYPE_PROJECTS = 2
 private const val VIEWTYPE_EXPERIENCE = 3
 private const val VIEWTYPE_EDUCATION = 4
 
+// TODO: I feel like this can be cleaned up using sealed classes:
+// https://proandroiddev.com/understanding-kotlin-sealed-classes-65c0adad7015
+class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter.SectionViewHolder>(){
 
-class SectionAdapter(private val sections: Set<Section>, val context: Context) : RecyclerView.Adapter<SectionAdapter.SectionViewHolder>(){
+    private val sections = setOf(Skills(), Projects(), Experience(), Education())
 
     open class SectionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvSection = view.tv_section
@@ -107,7 +110,6 @@ class SectionAdapter(private val sections: Set<Section>, val context: Context) :
 
         VIEWTYPE_EDUCATION -> {
             val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_education, parent, false)
-
             val viewHolder = EducationViewHolder(listItem)
 
             viewHolder.rvEducationHeaders.viewTreeObserver.addOnDrawListener{
@@ -230,14 +232,14 @@ class SkillsHeaderAdapter(val context: Context) : RecyclerView.Adapter<SkillsHea
     }
 
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SkillsHeaderAdapter.SkillsHeaderViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SkillsHeaderViewHolder {
         val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_skills_headers, parent, false)
         return SkillsHeaderViewHolder(listItem)
     }
 
     override fun getItemCount() = headers.size
 
-    override fun onBindViewHolder(holder: SkillsHeaderAdapter.SkillsHeaderViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: SkillsHeaderViewHolder, position: Int) {
         holder.tvSkillsHeader.text = headers.elementAt(position)
         val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         val skillBulletAdapter = SkillsBulletAdapter(Skills.bullets.elementAt(position))

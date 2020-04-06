@@ -15,20 +15,8 @@ import com.palarz.mike.myresume.BuildConfig
 import com.palarz.mike.myresume.R
 import com.palarz.mike.myresume.extensions.getResumeFile
 import com.palarz.mike.myresume.extensions.setBrowserClickListener
-import com.palarz.mike.myresume.model.Education
-import com.palarz.mike.myresume.model.Experience
-import com.palarz.mike.myresume.model.Projects
-import com.palarz.mike.myresume.model.Skills
 import com.palarz.mike.myresume.ui.adapter.SectionAdapter
 import kotlinx.android.synthetic.main.fragment_sections.view.*
-
-
-private val sections = setOf(
-    Skills(),
-    Projects(),
-    Experience(),
-    Education()
-)
 
 class SectionsFragment : Fragment() {
 
@@ -43,34 +31,35 @@ class SectionsFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
-        val view = inflater.inflate(R.layout.fragment_sections, container, false)
+        val rootView = inflater.inflate(R.layout.fragment_sections, container, false)
 
         manager = LinearLayoutManager(activity)
-        topicsAdapter = SectionAdapter(sections, activity!!)
+        topicsAdapter = SectionAdapter(activity!!)
 
-        recyclerView = view.rv_sections.apply{
+        recyclerView = rootView.rv_sections.apply{
             layoutManager = manager
             adapter = topicsAdapter
             // Had to add this since scrolling is slow within a NestedScrollView without it
             ViewCompat.setNestedScrollingEnabled(this, false)
         }
 
-        ivGithubLogo = view.iv_github_logo_social.apply {
+        ivGithubLogo = rootView.iv_github_logo_social.apply {
             setBrowserClickListener(getString(R.string.github_link), context)
         }
 
-        ivTwitterLogo = view.iv_twitter_logo_social.apply {
+        ivTwitterLogo = rootView.iv_twitter_logo_social.apply {
             setBrowserClickListener(getString(R.string.twitter_link), context)
         }
 
-        ivLinkedInLogo = view.iv_linkedin_logo_social.apply {
+        ivLinkedInLogo = rootView.iv_linkedin_logo_social.apply {
             setBrowserClickListener(getString(R.string.linkedin_link), context)
         }
 
-        ivAdobeLogo = view.iv_adobe_acrobat_logo_social
+        ivAdobeLogo = rootView.iv_adobe_acrobat_logo_social
         ivAdobeLogo.setOnClickListener {
             val pdfIntent = Intent(Intent.ACTION_VIEW)
             val file = resources.getResumeFile(context!!)
+            // TODO: Research and try to understand this better
             val uri = FileProvider.getUriForFile(context!!, "${BuildConfig.APPLICATION_ID}.fileprovider", file)
 
             val chooserTitle = resources.getString(R.string.app_chooser_title)
@@ -86,7 +75,7 @@ class SectionsFragment : Fragment() {
             }
         }
 
-        return view
+        return rootView
     }
 
 }
