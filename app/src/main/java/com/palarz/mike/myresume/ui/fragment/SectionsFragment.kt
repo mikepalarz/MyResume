@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_sections.view.*
 class SectionsFragment : Fragment() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var topicsAdapter: SectionAdapter
+    private lateinit var sectionsAdapter: SectionAdapter
     private lateinit var manager: RecyclerView.LayoutManager
     private lateinit var ivGithubLogo : ImageView
     private lateinit var ivTwitterLogo : ImageView
@@ -34,11 +34,11 @@ class SectionsFragment : Fragment() {
         val rootView = inflater.inflate(R.layout.fragment_sections, container, false)
 
         manager = LinearLayoutManager(activity)
-        topicsAdapter = SectionAdapter(activity!!)
+        sectionsAdapter = SectionAdapter(activity!!)
 
         recyclerView = rootView.rv_sections.apply{
             layoutManager = manager
-            adapter = topicsAdapter
+            adapter = sectionsAdapter
             // Had to add this since scrolling is slow within a NestedScrollView without it
             ViewCompat.setNestedScrollingEnabled(this, false)
         }

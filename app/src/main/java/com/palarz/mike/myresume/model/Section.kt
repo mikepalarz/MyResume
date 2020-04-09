@@ -1,6 +1,6 @@
 package com.palarz.mike.myresume.model
 
-abstract class Section {
+sealed class Section {
     abstract val sectionName: String
 }
 

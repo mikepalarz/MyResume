@@ -71,3 +71,5 @@ dependencies {
 
 // Needed for Firebase
 apply plugin: 'com.google.gms.google-services'
+
+// TODO: Figure out how to get unit tests to run before each debug build task
