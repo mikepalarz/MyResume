@@ -38,7 +38,7 @@ private const val VIEWTYPE_EDUCATION = 4
 // TODO: I feel like this can be cleaned up using sealed classes
 class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter.SectionViewHolder>(){
 
-    private val sections = setOf(Skills(), Projects(), Experience(), Education())
+    private val sections = setOf(Skills, Projects, Experience, Education)
 
     sealed class SectionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -248,6 +248,7 @@ class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter
         is Projects -> VIEWTYPE_PROJECTS
         is Experience -> VIEWTYPE_EXPERIENCE
         is Education -> VIEWTYPE_EDUCATION
+        else -> throw RuntimeException("Viewtype not found")
     }
 
 }
@@ -359,7 +360,7 @@ class ProjectsBulletAdapter(private val bullets: Set<String>) : RecyclerView.Ada
 
 class ExperienceCompaniesAdapter(val context: Context) : RecyclerView.Adapter<ExperienceCompaniesAdapter.ExperienceCompaniesViewHolder>() {
 
-    private val companies = Experience.companies
+    private val companies = Experience.headers
     private val positions = Experience.positions
     private val locations = Experience.locations
     private val dates = Experience.dates
@@ -417,8 +418,8 @@ class ExperienceBulletAdapter(private val bullets: Set<String>) : RecyclerView.A
 class EducationHeaderAdapter(val context: Context) : RecyclerView.Adapter<EducationHeaderAdapter.EducationHeaderViewHolder>() {
 
     private val schools = Education.schools
-    private val degrees = Education.degrees
-    private val dates = Education.dates
+    private val degrees = Education.headers
+    private val dates = Education.bullets
 
     class EducationHeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val ivEducationSchool = view.iv_education_school_logo
@@ -436,7 +437,7 @@ class EducationHeaderAdapter(val context: Context) : RecyclerView.Adapter<Educat
 
     override fun onBindViewHolder(holder: EducationHeaderViewHolder, position: Int) {
         holder.tvEducationDegree.text = degrees.elementAt(position)
-        holder.tvEducationDate.text = dates.elementAt(position)
+        holder.tvEducationDate.text = dates.elementAt(0).elementAt(position)
 
         val school = schools.elementAt(position)
 

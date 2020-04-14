@@ -10,25 +10,25 @@ class SectionTest {
 
     @Test
     fun `given a new Skills instance, when the section name is accessed, then its value is correct`() {
-        val section = Skills()
+        val section = Skills
         assertEquals("Section name is not correct", "Skills", section.sectionName)
     }
 
     @Test
     fun `given a new Projects instance, when the section name is accessed, then its value is correct`() {
-        val section = Projects()
+        val section = Projects
         assertEquals("Section name is not correct", "Projects", section.sectionName)
     }
 
     @Test
     fun `given a new Experience instance, when the section name is accessed, then its value is correct`() {
-        val section = Experience()
+        val section = Experience
         assertEquals("Section name is not correct", "Experience", section.sectionName)
     }
 
     @Test
     fun `given a new Education instance, when the section name is accessed, then its value is correct`() {
-        val section = Education()
+        val section = Education
         assertEquals("Section name is not correct", "Education", section.sectionName)
     }
 
@@ -114,7 +114,7 @@ class ExperienceTest {
     @Test
     fun `given the Experience companies, when they are accessed, then their values are correct`() {
         val companies = setOf("Motorola Solutions Inc.")
-        assertEquals("Companies are incorrect", companies, Experience.companies)
+        assertEquals("Companies are incorrect", companies, Experience.headers)
     }
 
     @Test
@@ -162,13 +162,13 @@ class EducationTest {
     @Test
     fun `given the Education degrees, when they are accessed, then their values are correct`() {
         val degrees = setOf("Android Development Nanodegree", "M. Sc. in Electrical Engineering", "B. Sc. in Electrical Engineering")
-        assertEquals("Positions are incorrect", degrees, Education.degrees)
+        assertEquals("Positions are incorrect", degrees, Education.headers)
     }
 
     @Test
     fun `given the Education dates, when they are accessed, then their values are correct`() {
-        val dates = setOf("October 2018", "May 2015", "December 2012")
-        assertEquals("Locations are incorrect", dates, Education.dates)
+        val dates = setOf(setOf("October 2018", "May 2015", "December 2012"))
+        assertEquals("Locations are incorrect", dates, Education.bullets)
     }
 
 }
