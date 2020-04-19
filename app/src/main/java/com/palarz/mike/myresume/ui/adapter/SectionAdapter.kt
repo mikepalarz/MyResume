@@ -29,71 +29,125 @@ import kotlinx.android.synthetic.main.list_item_projects_headers.view.*
 import kotlinx.android.synthetic.main.list_item_skills.view.*
 import kotlinx.android.synthetic.main.list_item_skills_bullet.view.*
 import kotlinx.android.synthetic.main.list_item_skills_headers.view.*
+import timber.log.Timber
 
 private const val VIEWTYPE_SKILLS = 1
 private const val VIEWTYPE_PROJECTS = 2
 private const val VIEWTYPE_EXPERIENCE = 3
 private const val VIEWTYPE_EDUCATION = 4
 
-// TODO: I feel like this can be cleaned up using sealed classes
 class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter.SectionViewHolder>(){
 
     private val sections = setOf(Skills, Projects, Experience, Education)
 
-    sealed class SectionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-        abstract fun bind()
+    abstract inner class SectionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        abstract fun bind(position: Int)
         abstract val sectionName: TextView
         abstract val headers: RecyclerView
         abstract var maxHeight: Int
+    }
 
-        // TODO: Need to refactor onBindViewHolder() logic into bind() methods
-        class SkillsViewHolder(view: View) : SectionViewHolder(view) {
-            override val sectionName = view.tv_skills_section
-            override val headers = view.findViewById<RecyclerView>(R.id.rv_content)
-            override var maxHeight = headers.measuredHeight
+    inner class SkillsViewHolder(view: View) : SectionViewHolder(view) {
+        override val sectionName = view.tv_skills_section
+        override val headers = view.findViewById<RecyclerView>(R.id.rv_content)
+        override var maxHeight = headers.measuredHeight
 
-            override fun bind() {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        override fun bind(position: Int) {
+            val skill = sections.elementAt(position) as Skills
+            sectionName.text = skill.sectionName
+            val skillsHeadersAdapter = SkillsHeaderAdapter(context)
+            val linearLayoutManager = LinearLayoutManager(context)
+            headers.apply {
+                setHasFixedSize(true)
+                layoutManager = linearLayoutManager
+                adapter = skillsHeadersAdapter
+            }
+            itemView.setOnClickListener {
+                if ((it as CardView).isCollapsed()) {
+                    it.expand(maxHeight)
+                } else {
+                    it.collapse()
+                }
             }
         }
+    }
 
-        class ProjectsViewHolder(view: View) : SectionViewHolder(view) {
-            override val sectionName= view.tv_projects_section
-            override val headers = view.findViewById<RecyclerView>(R.id.rv_content)
-            override var maxHeight = headers.measuredHeight
+    inner class ProjectsViewHolder(view: View) : SectionViewHolder(view) {
+        override val sectionName= view.tv_projects_section
+        override val headers = view.findViewById<RecyclerView>(R.id.rv_content)
+        override var maxHeight = headers.measuredHeight
 
-            override fun bind() {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        override fun bind(position: Int) {
+            val project = sections.elementAt(position) as Projects
+            sectionName.text = project.sectionName
+            val projectsHeadersAdapter = ProjectsHeaderAdapter(context)
+            val linearLayoutManager = LinearLayoutManager(context)
+            headers.apply {
+                layoutManager = linearLayoutManager
+                adapter = projectsHeadersAdapter
+            }
+            itemView.setOnClickListener {
+                if ((it as CardView).isCollapsed()) {
+                    it.expand(maxHeight)
+                } else {
+                    it.collapse()
+                }
             }
         }
+    }
 
-        class ExperienceViewHolder(view: View) : SectionViewHolder(view) {
-            override val sectionName = view.tv_experience_section
-            override val headers = view.findViewById<RecyclerView>(R.id.rv_content)
-            override var maxHeight = headers.measuredHeight
+    inner class ExperienceViewHolder(view: View) : SectionViewHolder(view) {
+        override val sectionName = view.tv_experience_section
+        override val headers = view.findViewById<RecyclerView>(R.id.rv_content)
+        override var maxHeight = headers.measuredHeight
 
-            override fun bind() {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        override fun bind(position: Int) {
+            val experience = sections.elementAt(position) as Experience
+            sectionName.text = experience.sectionName
+            val experienceCompaniesAdapter = ExperienceCompaniesAdapter(context)
+            val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            headers.apply {
+                layoutManager = linearLayoutManager
+                adapter = experienceCompaniesAdapter
+            }
+            itemView.setOnClickListener {
+                if ((it as CardView).isCollapsed()) {
+                    it.expand(maxHeight)
+                } else {
+                    it.collapse()
+                }
             }
         }
+    }
 
-        class EducationViewHolder(view: View) : SectionViewHolder(view) {
-            override val sectionName = view.tv_education_section
-            override val headers = view.findViewById<RecyclerView>(R.id.rv_content)
-            override var maxHeight = headers.measuredHeight
+    inner class EducationViewHolder(view: View) : SectionViewHolder(view) {
+        override val sectionName = view.tv_education_section
+        override val headers = view.findViewById<RecyclerView>(R.id.rv_content)
+        override var maxHeight = headers.measuredHeight
 
-            override fun bind() {
-                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        override fun bind(position: Int) {
+            val education = sections.elementAt(position) as Education
+            sectionName.text = education.sectionName
+            val educationAdapter = EducationHeaderAdapter(context)
+            val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            headers.apply {
+                layoutManager = linearLayoutManager
+                adapter = educationAdapter
+            }
+            itemView.setOnClickListener {
+                if ((it as CardView).isCollapsed()) {
+                    it.expand(maxHeight)
+                } else {
+                    it.collapse()
+                }
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SectionViewHolder = when(viewType) {
         VIEWTYPE_SKILLS -> {
             val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_skills, parent, false)
-            val viewHolder = SectionViewHolder.SkillsViewHolder(listItem)
+            val viewHolder = SkillsViewHolder(listItem)
 
             viewHolder.headers.viewTreeObserver.addOnDrawListener{
                 val height = viewHolder.headers.measuredHeight
@@ -107,7 +161,7 @@ class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter
 
         VIEWTYPE_PROJECTS -> {
             val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_projects, parent, false)
-            val viewHolder = SectionViewHolder.ProjectsViewHolder(listItem)
+            val viewHolder = ProjectsViewHolder(listItem)
 
             viewHolder.headers.viewTreeObserver.addOnDrawListener{
                 val height = viewHolder.headers.measuredHeight
@@ -121,7 +175,7 @@ class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter
 
         VIEWTYPE_EXPERIENCE -> {
             val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_experience, parent, false)
-            val viewHolder = SectionViewHolder.ExperienceViewHolder(listItem)
+            val viewHolder = ExperienceViewHolder(listItem)
 
             viewHolder.headers.viewTreeObserver.addOnDrawListener{
                 val height = viewHolder.headers.measuredHeight
@@ -135,7 +189,7 @@ class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter
 
         VIEWTYPE_EDUCATION -> {
             val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_education, parent, false)
-            val viewHolder = SectionViewHolder.EducationViewHolder(listItem)
+            val viewHolder = EducationViewHolder(listItem)
 
             viewHolder.headers.viewTreeObserver.addOnDrawListener{
                 val height = viewHolder.headers.measuredHeight
@@ -147,17 +201,8 @@ class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter
             viewHolder
         }
         else -> {
-            val listItem = LayoutInflater.from(parent.context).inflate(R.layout.list_item_skills, parent, false)
-            val viewHolder = SectionViewHolder.SkillsViewHolder(listItem)
-
-            viewHolder.headers.viewTreeObserver.addOnDrawListener{
-                val height = viewHolder.headers.measuredHeight
-                if (height > viewHolder.maxHeight) {
-                    viewHolder.maxHeight = height
-                }
-            }
-
-            viewHolder
+            Timber.e("ViewHolder could not be created")
+            throw RuntimeException("ViewHolder could not be created")
         }
     }
 
@@ -165,75 +210,18 @@ class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter
 
         when(holder.itemViewType) {
             VIEWTYPE_SKILLS -> {
-                val skill = sections.elementAt(position) as Skills
-                (holder as SectionViewHolder.SkillsViewHolder).sectionName.text = skill.sectionName
-                val skillsHeadersAdapter = SkillsHeaderAdapter(context)
-                val linearLayoutManager = LinearLayoutManager(context)
-                holder.headers.apply {
-                    setHasFixedSize(true)
-                    layoutManager = linearLayoutManager
-                    adapter = skillsHeadersAdapter
-                }
-                holder.itemView.setOnClickListener {
-                    if ((it as CardView).isCollapsed()) {
-                        it.expand(holder.maxHeight)
-                    } else {
-                        it.collapse()
-                    }
-                }
+                (holder as SkillsViewHolder).bind(position)
 
             }
             VIEWTYPE_PROJECTS -> {
-                val project = sections.elementAt(position) as Projects
-                (holder as SectionViewHolder.ProjectsViewHolder).sectionName.text = project.sectionName
-                val projectsHeadersAdapter = ProjectsHeaderAdapter(context)
-                val linearLayoutManager = LinearLayoutManager(context)
-                holder.headers.apply {
-                    layoutManager = linearLayoutManager
-                    adapter = projectsHeadersAdapter
-                }
-                holder.itemView.setOnClickListener {
-                    if ((it as CardView).isCollapsed()) {
-                        it.expand(holder.maxHeight)
-                    } else {
-                        it.collapse()
-                    }
-                }
+                (holder as ProjectsViewHolder).bind(position)
 
             }
             VIEWTYPE_EXPERIENCE -> {
-                val experience = sections.elementAt(position) as Experience
-                (holder as SectionViewHolder.ExperienceViewHolder).sectionName.text = experience.sectionName
-                val experienceCompaniesAdapter = ExperienceCompaniesAdapter(context)
-                val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                holder.headers.apply {
-                    layoutManager = linearLayoutManager
-                    adapter = experienceCompaniesAdapter
-                }
-                holder.itemView.setOnClickListener {
-                    if ((it as CardView).isCollapsed()) {
-                        it.expand(holder.maxHeight)
-                    } else {
-                        it.collapse()
-                    }
-                }
+                (holder as ExperienceViewHolder).bind(position)
             }
             VIEWTYPE_EDUCATION -> {
-                val education = sections.elementAt(position) as Education
-                (holder as SectionViewHolder.EducationViewHolder).sectionName.text = education.sectionName
-                val educationAdapter = EducationHeaderAdapter(context)
-                val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-                holder.headers.apply {
-                    layoutManager = linearLayoutManager
-                    adapter = educationAdapter
-                }
-                holder.itemView.setOnClickListener {
-                    if ((it as CardView).isCollapsed()) {
-                        it.expand(holder.maxHeight)
-                    } else {
-                        it.collapse()
-                    }
-                }
+                (holder as EducationViewHolder).bind(position)
             }
         }
 
@@ -248,7 +236,10 @@ class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter
         is Projects -> VIEWTYPE_PROJECTS
         is Experience -> VIEWTYPE_EXPERIENCE
         is Education -> VIEWTYPE_EDUCATION
-        else -> throw RuntimeException("Viewtype not found")
+        else ->{
+            Timber.e("View type not found")
+            throw RuntimeException("View type not found")
+        }
     }
 
 }
@@ -257,6 +248,7 @@ class SkillsHeaderAdapter(val context: Context) : RecyclerView.Adapter<SkillsHea
 
     private val headers = Skills.headers
 
+    // TODO: These should very likely be inner classes as well, not just for this adapter but all others as well
     class SkillsHeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvSkillsHeader = view.tv_skills_header
         val rvBullets = view.rv_skills_bullets
