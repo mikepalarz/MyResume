@@ -9,3 +9,4 @@
 keystore.properties
 /app/keystore.jks
 *.apk
+app/.attach_*

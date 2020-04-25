@@ -41,7 +41,15 @@ class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter
     private val sections = setOf(Skills, Projects, Experience, Education)
 
     abstract inner class SectionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        abstract fun bind(position: Int)
+        open fun bind(position: Int) {
+            itemView.setOnClickListener {
+                if ((it as CardView).isCollapsed()) {
+                    it.expand(maxHeight)
+                } else {
+                    it.collapse()
+                }
+            }
+        }
         abstract val sectionName: TextView
         abstract val headers: RecyclerView
         abstract var maxHeight: Int
@@ -53,6 +61,7 @@ class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter
         override var maxHeight = headers.measuredHeight
 
         override fun bind(position: Int) {
+            super.bind(position)
             val skill = sections.elementAt(position) as Skills
             sectionName.text = skill.sectionName
             val skillsHeadersAdapter = SkillsHeaderAdapter(context)
@@ -62,13 +71,7 @@ class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter
                 layoutManager = linearLayoutManager
                 adapter = skillsHeadersAdapter
             }
-            itemView.setOnClickListener {
-                if ((it as CardView).isCollapsed()) {
-                    it.expand(maxHeight)
-                } else {
-                    it.collapse()
-                }
-            }
+
         }
     }
 
@@ -78,6 +81,7 @@ class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter
         override var maxHeight = headers.measuredHeight
 
         override fun bind(position: Int) {
+            super.bind(position)
             val project = sections.elementAt(position) as Projects
             sectionName.text = project.sectionName
             val projectsHeadersAdapter = ProjectsHeaderAdapter(context)
@@ -85,13 +89,6 @@ class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter
             headers.apply {
                 layoutManager = linearLayoutManager
                 adapter = projectsHeadersAdapter
-            }
-            itemView.setOnClickListener {
-                if ((it as CardView).isCollapsed()) {
-                    it.expand(maxHeight)
-                } else {
-                    it.collapse()
-                }
             }
         }
     }
@@ -102,6 +99,7 @@ class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter
         override var maxHeight = headers.measuredHeight
 
         override fun bind(position: Int) {
+            super.bind(position)
             val experience = sections.elementAt(position) as Experience
             sectionName.text = experience.sectionName
             val experienceCompaniesAdapter = ExperienceCompaniesAdapter(context)
@@ -109,13 +107,6 @@ class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter
             headers.apply {
                 layoutManager = linearLayoutManager
                 adapter = experienceCompaniesAdapter
-            }
-            itemView.setOnClickListener {
-                if ((it as CardView).isCollapsed()) {
-                    it.expand(maxHeight)
-                } else {
-                    it.collapse()
-                }
             }
         }
     }
@@ -126,6 +117,7 @@ class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter
         override var maxHeight = headers.measuredHeight
 
         override fun bind(position: Int) {
+            super.bind(position)
             val education = sections.elementAt(position) as Education
             sectionName.text = education.sectionName
             val educationAdapter = EducationHeaderAdapter(context)
@@ -133,13 +125,6 @@ class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter
             headers.apply {
                 layoutManager = linearLayoutManager
                 adapter = educationAdapter
-            }
-            itemView.setOnClickListener {
-                if ((it as CardView).isCollapsed()) {
-                    it.expand(maxHeight)
-                } else {
-                    it.collapse()
-                }
             }
         }
     }
@@ -228,9 +213,7 @@ class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter
     }
 
     override fun getItemCount() = sections.size
-
-    // TODO: What if you return the layout ID here? Would having the layout ID assigned as the viewtype simplify
-    // onCreateViewHolder()?
+    
     override fun getItemViewType(position: Int): Int = when (sections.elementAt(position)) {
         is Skills -> VIEWTYPE_SKILLS
         is Projects -> VIEWTYPE_PROJECTS
