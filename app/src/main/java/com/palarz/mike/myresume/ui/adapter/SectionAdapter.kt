@@ -213,7 +213,7 @@ class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter
     }
 
     override fun getItemCount() = sections.size
-    
+
     override fun getItemViewType(position: Int): Int = when (sections.elementAt(position)) {
         is Skills -> VIEWTYPE_SKILLS
         is Projects -> VIEWTYPE_PROJECTS
@@ -227,14 +227,26 @@ class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter
 
 }
 
+// TODO: To make this an even better usage of OOP, create an abstract SectionHeaderAdapter class
+// and have all header adapters extend it
 class SkillsHeaderAdapter(val context: Context) : RecyclerView.Adapter<SkillsHeaderAdapter.SkillsHeaderViewHolder>() {
 
     private val headers = Skills.headers
 
-    // TODO: These should very likely be inner classes as well, not just for this adapter but all others as well
-    class SkillsHeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvSkillsHeader = view.tv_skills_header
-        val rvBullets = view.rv_skills_bullets
+    inner class SkillsHeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val tvSkillsHeader = view.tv_skills_header
+        private val rvBullets = view.rv_skills_bullets
+
+        fun bind(position: Int) {
+            tvSkillsHeader.text = headers.elementAt(position)
+            val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            val skillBulletAdapter = SkillsBulletAdapter(context, Skills.bullets.elementAt(position))
+            rvBullets.apply {
+                setHasFixedSize(true)
+                layoutManager = linearLayoutManager
+                adapter = skillBulletAdapter
+            }
+        }
     }
 
 
@@ -246,21 +258,18 @@ class SkillsHeaderAdapter(val context: Context) : RecyclerView.Adapter<SkillsHea
     override fun getItemCount() = headers.size
 
     override fun onBindViewHolder(holder: SkillsHeaderViewHolder, position: Int) {
-        holder.tvSkillsHeader.text = headers.elementAt(position)
-        val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        val skillBulletAdapter = SkillsBulletAdapter(Skills.bullets.elementAt(position))
-        holder.rvBullets.apply {
-            setHasFixedSize(true)
-            layoutManager = linearLayoutManager
-            adapter = skillBulletAdapter
-        }
+        holder.bind(position)
     }
 }
 
-class SkillsBulletAdapter(private val bullets: Set<String>) : RecyclerView.Adapter<SkillsBulletAdapter.SkillsBulletViewHolder>() {
+class SkillsBulletAdapter(private val context: Context, private val bullets: Set<String>) : RecyclerView.Adapter<SkillsBulletAdapter.SkillsBulletViewHolder>() {
 
-    class SkillsBulletViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvBullet = view.tv_skills_bullet
+    inner class SkillsBulletViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val tvBullet = view.tv_skills_bullet
+
+        fun bind(position: Int) {
+            tvBullet.text = context.getString(R.string.bullet, bullets.elementAt(position))
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SkillsBulletViewHolder {
@@ -271,21 +280,40 @@ class SkillsBulletAdapter(private val bullets: Set<String>) : RecyclerView.Adapt
     override fun getItemCount() = bullets.size
 
     override fun onBindViewHolder(holder: SkillsBulletViewHolder, position: Int) {
-        holder.tvBullet.text = "\u2022 ${bullets.elementAt(position)}"
+        holder.bind(position)
     }
 }
 
-open class ProjectsHeaderAdapter(val context: Context) : RecyclerView.Adapter<ProjectsHeaderAdapter.ProjectsHeaderViewHolder>() {
+class ProjectsHeaderAdapter(val context: Context) : RecyclerView.Adapter<ProjectsHeaderAdapter.ProjectsHeaderViewHolder>() {
 
-    val headers = Projects.headers
-    val dates = Projects.dates
-    val urls = Projects.urls
+    private val headers = Projects.headers
+    private val dates = Projects.dates
+    private val urls = Projects.urls
 
-    class ProjectsHeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvProjectsHeader = view.tv_projects_header
-        val tvProjectsDate = view.tv_projects_date
-        val ivGithubLogo = view.findViewById<ImageView>(R.id.iv_github_logo_project)
-        val rvBullets = view.rv_projects_bullets
+    inner class ProjectsHeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val tvProjectsHeader = view.tv_projects_header
+        private val tvProjectsDate = view.tv_projects_date
+        private val ivGithubLogo = view.findViewById<ImageView>(R.id.iv_github_logo_project)
+        private val rvBullets = view.rv_projects_bullets
+
+        fun bind(position: Int) {
+            tvProjectsHeader.text = headers.elementAt(position)
+            tvProjectsDate.text = dates.elementAt(position)
+            if (urls.elementAt(position).isEmpty()) {
+                ivGithubLogo.visibility = View.GONE
+            } else {
+                ivGithubLogo.setBrowserClickListener(urls.elementAt(position), context)
+            }
+
+            val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            val projectBulletAdapter = ProjectsBulletAdapter(context, Projects.bullets.elementAt(position))
+            rvBullets.apply {
+                setHasFixedSize(true)
+                layoutManager = linearLayoutManager
+                adapter = projectBulletAdapter
+            }
+        }
+
     }
 
 
@@ -297,28 +325,18 @@ open class ProjectsHeaderAdapter(val context: Context) : RecyclerView.Adapter<Pr
     override fun getItemCount() = headers.size
 
     override fun onBindViewHolder(holder: ProjectsHeaderViewHolder, position: Int) {
-        holder.tvProjectsHeader.text = headers.elementAt(position)
-        holder.tvProjectsDate.text = dates.elementAt(position)
-        if (urls.elementAt(position).isEmpty()) {
-            holder.ivGithubLogo.visibility = View.GONE
-        } else {
-            holder.ivGithubLogo.setBrowserClickListener(urls.elementAt(position), context)
-        }
-
-        val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        val projectBulletAdapter = ProjectsBulletAdapter(Projects.bullets.elementAt(position))
-        holder.rvBullets.apply {
-            setHasFixedSize(true)
-            layoutManager = linearLayoutManager
-            adapter = projectBulletAdapter
-        }
+        holder.bind(position)
     }
 }
 
-class ProjectsBulletAdapter(private val bullets: Set<String>) : RecyclerView.Adapter<ProjectsBulletAdapter.ProjectsBulletViewHolder>() {
+class ProjectsBulletAdapter(private val context: Context, private val bullets: Set<String>) : RecyclerView.Adapter<ProjectsBulletAdapter.ProjectsBulletViewHolder>() {
 
-    class ProjectsBulletViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvBullet = view.tv_projects_bullet
+    inner class ProjectsBulletViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val tvBullet = view.tv_projects_bullet
+
+        fun bind(position: Int) {
+            tvBullet.text = context.getString(R.string.bullet, bullets.elementAt(position))
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProjectsBulletViewHolder {
@@ -329,7 +347,7 @@ class ProjectsBulletAdapter(private val bullets: Set<String>) : RecyclerView.Ada
     override fun getItemCount() = bullets.size
 
     override fun onBindViewHolder(holder: ProjectsBulletViewHolder, position: Int) {
-        holder.tvBullet.text = "\u2022 ${bullets.elementAt(position)}"
+        holder.bind(position)
     }
 }
 
@@ -340,12 +358,27 @@ class ExperienceCompaniesAdapter(val context: Context) : RecyclerView.Adapter<Ex
     private val locations = Experience.locations
     private val dates = Experience.dates
 
-    class ExperienceCompaniesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvExperienceCompany = view.tv_experience_company
-        val tvExperiencePosition = view.tv_experience_position
-        val tvExperienceLocation = view.tv_experience_location
-        val tvExperienceDate = view.tv_experience_date
-        val rvBullets = view.rv_experience_bullets
+    inner class ExperienceCompaniesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val tvExperienceCompany = view.tv_experience_company
+        private val tvExperiencePosition = view.tv_experience_position
+        private val tvExperienceLocation = view.tv_experience_location
+        private val tvExperienceDate = view.tv_experience_date
+        private val rvBullets = view.rv_experience_bullets
+
+        fun bind(position: Int) {
+            tvExperienceCompany.text = companies.elementAt(position)
+            tvExperiencePosition.text = positions.elementAt(position)
+            tvExperienceLocation.text = locations.elementAt(position)
+            tvExperienceDate.text = dates.elementAt(position)
+
+            val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            val experienceBulletAdapter = ExperienceBulletAdapter(context, Experience.bullets.elementAt(position))
+            rvBullets.apply {
+                setHasFixedSize(true)
+                layoutManager = linearLayoutManager
+                adapter = experienceBulletAdapter
+            }
+        }
     }
 
 
@@ -357,25 +390,18 @@ class ExperienceCompaniesAdapter(val context: Context) : RecyclerView.Adapter<Ex
     override fun getItemCount() = companies.size
 
     override fun onBindViewHolder(holder: ExperienceCompaniesViewHolder, position: Int) {
-        holder.tvExperienceCompany.text = companies.elementAt(position)
-        holder.tvExperiencePosition.text = positions.elementAt(position)
-        holder.tvExperienceLocation.text = locations.elementAt(position)
-        holder.tvExperienceDate.text = dates.elementAt(position)
-
-        val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        val experienceBulletAdapter = ExperienceBulletAdapter(Experience.bullets.elementAt(position))
-        holder.rvBullets.apply {
-            setHasFixedSize(true)
-            layoutManager = linearLayoutManager
-            adapter = experienceBulletAdapter
-        }
+        holder.bind(position)
     }
 }
 
-class ExperienceBulletAdapter(private val bullets: Set<String>) : RecyclerView.Adapter<ExperienceBulletAdapter.ExperienceBulletViewHolder>() {
+class ExperienceBulletAdapter(private val context: Context, private val bullets: Set<String>) : RecyclerView.Adapter<ExperienceBulletAdapter.ExperienceBulletViewHolder>() {
 
-    class ExperienceBulletViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val tvBullet = view.tv_experience_bullet
+    inner class ExperienceBulletViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val tvBullet = view.tv_experience_bullet
+
+        fun bind(position: Int) {
+            tvBullet.text = context.getString(R.string.bullet, bullets.elementAt(position))
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExperienceBulletViewHolder {
@@ -386,7 +412,7 @@ class ExperienceBulletAdapter(private val bullets: Set<String>) : RecyclerView.A
     override fun getItemCount() = bullets.size
 
     override fun onBindViewHolder(holder: ExperienceBulletViewHolder, position: Int) {
-        holder.tvBullet.text = "\u2022 ${bullets.elementAt(position)}"
+        holder.bind(position)
     }
 }
 
@@ -396,10 +422,26 @@ class EducationHeaderAdapter(val context: Context) : RecyclerView.Adapter<Educat
     private val degrees = Education.headers
     private val dates = Education.bullets
 
-    class EducationHeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val ivEducationSchool = view.iv_education_school_logo
-        val tvEducationDegree = view.tv_education_degree
-        val tvEducationDate = view.tv_education_date
+    inner class EducationHeaderViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val ivEducationSchool = view.iv_education_school_logo
+        private val tvEducationDegree = view.tv_education_degree
+        private val tvEducationDate = view.tv_education_date
+
+        fun bind(position: Int) {
+            tvEducationDegree.text = degrees.elementAt(position)
+            tvEducationDate.text = dates.elementAt(0).elementAt(position)
+
+            when(schools.elementAt(position)) {
+                "Udacity" -> {
+                    ivEducationSchool.setImageResource(R.drawable.udacity)
+                    ivEducationSchool.setBrowserClickListener("https://www.udacity.com/", context)
+                }
+                "Illinois Institute of Technology" -> {
+                    ivEducationSchool.setImageResource(R.drawable.iit)
+                    ivEducationSchool.setBrowserClickListener("https://web.iit.edu/", context)
+                }
+            }
+        }
     }
 
 
@@ -411,20 +453,6 @@ class EducationHeaderAdapter(val context: Context) : RecyclerView.Adapter<Educat
     override fun getItemCount() = degrees.size
 
     override fun onBindViewHolder(holder: EducationHeaderViewHolder, position: Int) {
-        holder.tvEducationDegree.text = degrees.elementAt(position)
-        holder.tvEducationDate.text = dates.elementAt(0).elementAt(position)
-
-        val school = schools.elementAt(position)
-
-        when(school) {
-            "Udacity" -> {
-                holder.ivEducationSchool.setImageResource(R.drawable.udacity)
-                holder.ivEducationSchool.setBrowserClickListener("https://www.udacity.com/", context)
-            }
-            "Illinois Institute of Technology" -> {
-                holder.ivEducationSchool.setImageResource(R.drawable.iit)
-                holder.ivEducationSchool.setBrowserClickListener("https://web.iit.edu//", context)
-            }
-        }
+        holder.bind(position)
     }
 }

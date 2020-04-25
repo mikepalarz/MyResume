@@ -11,6 +11,7 @@
 
     <!--Sections fragment-->
     <string name="app_chooser_title">Please select an app</string>
+    <string name="bullet">• %1$s</string>
 
     <!--Contact Me Dialog-->
     <string name="contact_me_dialog_title">Would you like to contact Mike?</string>
