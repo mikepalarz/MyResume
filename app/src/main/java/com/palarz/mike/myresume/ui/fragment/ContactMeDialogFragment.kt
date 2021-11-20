@@ -4,9 +4,9 @@ import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.constraint.ConstraintLayout
-import android.support.v4.app.DialogFragment
-import android.support.v7.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.DialogFragment
+import androidx.appcompat.app.AlertDialog
 import android.widget.TextView
 import com.palarz.mike.myresume.R
 import java.lang.IllegalStateException

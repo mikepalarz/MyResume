@@ -1,9 +1,9 @@
 package com.palarz.mike.myresume.ui.adapter
 
 import android.content.Context
-import android.support.v7.widget.CardView
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -69,7 +69,8 @@ class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter
             val skill = sections.elementAt(position) as Skills
             sectionName.text = skill.sectionName
             val skillsHeadersAdapter = SkillsHeaderAdapter(context)
-            val linearLayoutManager = LinearLayoutManager(context)
+            val linearLayoutManager =
+                LinearLayoutManager(context)
             headers.apply {
                 setHasFixedSize(true)
                 layoutManager = linearLayoutManager
@@ -89,7 +90,8 @@ class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter
             val project = sections.elementAt(position) as Projects
             sectionName.text = project.sectionName
             val projectsHeadersAdapter = ProjectsHeaderAdapter(context)
-            val linearLayoutManager = LinearLayoutManager(context)
+            val linearLayoutManager =
+                LinearLayoutManager(context)
             headers.apply {
                 layoutManager = linearLayoutManager
                 adapter = projectsHeadersAdapter
@@ -107,7 +109,12 @@ class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter
             val experience = sections.elementAt(position) as Experience
             sectionName.text = experience.sectionName
             val experienceCompaniesAdapter = ExperienceCompaniesAdapter(context)
-            val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            val linearLayoutManager =
+                LinearLayoutManager(
+                    context,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
             headers.apply {
                 layoutManager = linearLayoutManager
                 adapter = experienceCompaniesAdapter
@@ -125,7 +132,12 @@ class SectionAdapter(val context: Context) : RecyclerView.Adapter<SectionAdapter
             val education = sections.elementAt(position) as Education
             sectionName.text = education.sectionName
             val educationAdapter = EducationHeaderAdapter(context)
-            val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            val linearLayoutManager =
+                LinearLayoutManager(
+                    context,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
             headers.apply {
                 layoutManager = linearLayoutManager
                 adapter = educationAdapter
@@ -252,7 +264,12 @@ class SkillsHeaderAdapter(val context: Context) : RecyclerView.Adapter<SkillsHea
 
         override fun bind(position: Int) {
             header.text = headers.elementAt(position)
-            val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            val linearLayoutManager =
+                LinearLayoutManager(
+                    context,
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
             val skillBulletAdapter = SkillsBulletAdapter(context, Skills.bullets.elementAt(position))
             bullets.apply {
                 setHasFixedSize(true)
@@ -318,7 +335,12 @@ class ProjectsHeaderAdapter(val context: Context) : RecyclerView.Adapter<Project
                 ivGithubLogo.setBrowserClickListener(urls.elementAt(position), context)
             }
 
-            val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            val linearLayoutManager =
+                LinearLayoutManager(
+                    context,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
             val projectBulletAdapter = ProjectsBulletAdapter(context, Projects.bullets.elementAt(position))
             bullets.apply {
                 setHasFixedSize(true)
@@ -384,7 +406,12 @@ class ExperienceCompaniesAdapter(val context: Context) : RecyclerView.Adapter<Ex
             tvExperienceLocation.text = locations.elementAt(position)
             tvExperienceDate.text = dates.elementAt(position)
 
-            val linearLayoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            val linearLayoutManager =
+                LinearLayoutManager(
+                    context,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
             val experienceBulletAdapter = ExperienceBulletAdapter(context, Experience.bullets.elementAt(position))
             bullets.apply {
                 setHasFixedSize(true)

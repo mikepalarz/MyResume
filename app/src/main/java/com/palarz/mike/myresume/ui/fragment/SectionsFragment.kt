@@ -2,11 +2,11 @@ package com.palarz.mike.myresume.ui.fragment
 
 import android.content.Intent
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.content.FileProvider
-import android.support.v4.view.ViewCompat
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.fragment.app.Fragment
+import androidx.core.content.FileProvider
+import androidx.core.view.ViewCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -69,7 +69,7 @@ class SectionsFragment : Fragment() {
                 flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
                 val chooser = Intent.createChooser(this, chooserTitle)
                 // Checking if there's an activity to handle pdfIntent
-                if (pdfIntent.resolveActivity(activity?.packageManager) != null) {
+                if (activity?.packageManager?.let { pm -> pdfIntent.resolveActivity(pm) } != null) {
                     context?.startActivity(chooser)
                 }
             }
