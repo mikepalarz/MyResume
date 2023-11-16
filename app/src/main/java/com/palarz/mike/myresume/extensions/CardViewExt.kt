@@ -31,7 +31,7 @@ fun CardView.collapse() {
         GONE.
          */
         addListener(object : AnimatorListenerAdapter(){
-            override fun onAnimationEnd(animation: Animator?) {
+            override fun onAnimationEnd(animation: Animator) {
                 content.visibility = View.GONE
             }
         })
@@ -74,7 +74,7 @@ fun CardView.expand(maxHeight: Int) {
 
         // Just as we did within collapse(), we need this since content is within a ConstraintLayout.
         addListener(object : AnimatorListenerAdapter(){
-            override fun onAnimationStart(animation: Animator?) {
+            override fun onAnimationStart(animation: Animator) {
                 content.visibility = View.VISIBLE
             }
         })

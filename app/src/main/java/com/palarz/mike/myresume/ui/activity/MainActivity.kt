@@ -1,8 +1,8 @@
 package com.palarz.mike.myresume.ui.activity
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import com.palarz.mike.myresume.R
 import com.palarz.mike.myresume.ui.fragment.ContactMeDialogFragment
 import com.palarz.mike.myresume.ui.fragment.SectionsFragment

@@ -14,10 +14,10 @@ import java.lang.IllegalStateException
 class ContactMeDialogFragment : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        return activity?.let {
+        return activity?.run {
 
-            val builder = AlertDialog.Builder(it)
-            val rootView = it.layoutInflater.inflate(R.layout.dialog_contact_me, null)
+            val builder = AlertDialog.Builder(this)
+            val rootView = layoutInflater.inflate(R.layout.dialog_contact_me, null)
             rootView.findViewById<ConstraintLayout>(R.id.dialog_contact_me_phone).setOnClickListener {
                 val phoneNumber = getString(R.string.my_phone_number)
                 val phoneIntent = Intent(Intent.ACTION_DIAL)
@@ -31,7 +31,7 @@ class ContactMeDialogFragment : DialogFragment() {
                     data = Uri.parse("mailto:")
                     putExtra(Intent.EXTRA_EMAIL, addresses)
                 }
-                if (emailIntent.resolveActivity(activity?.packageManager) != null) {
+                if (emailIntent.resolveActivity(packageManager) != null) {
                     startActivity(emailIntent)
                 }
             }
